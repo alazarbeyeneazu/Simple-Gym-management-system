@@ -76,7 +76,17 @@ func (a *dbAdapter) GetUserByFirstName(ctx context.Context, firstname string) ([
 }
 func (a *dbAdapter) GetUserByLastName(ctx context.Context, lastname string) ([]models.User, error) {
 
-	return []models.User{}, nil
+	var users []models.User
+	err := validation.Validate(&lastname, validation.Required)
+	if err != nil {
+		return []models.User{}, err
+	}
+	result := a.db.Where("last_name = ?", lastname).Find(&users)
+	if result.Error != nil {
+		return []models.User{}, result.Error
+	}
+
+	return users, nil
 }
 func (a *dbAdapter) GetUseByPhoneNumber(ctx context.Context, phonenumber string) (models.User, error) {
 	return models.User{}, nil
