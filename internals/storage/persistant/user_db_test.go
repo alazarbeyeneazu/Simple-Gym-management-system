@@ -116,3 +116,45 @@ func TestGetUsers(t *testing.T) {
 	require.NoError(t, err)
 	require.GreaterOrEqual(t, len(result), 10)
 }
+
+func TestGetUserByFirstName(t *testing.T) {
+	testdb := Init()
+	firstname := utils.RandomUserName()
+	for i := 0; i < 10; i++ {
+		randomeUser := models.User{
+			FirstName:   firstname,
+			LastName:    utils.RandomUserName(),
+			PhoneNumber: utils.RandomePhoneNumber(),
+			Password:    utils.RandomPassword(),
+		}
+		testdb.CreateUser(context.Background(), randomeUser)
+	}
+	testCase := []struct {
+		name      string
+		firstname string
+		checker   func(t *testing.T, users []models.User, err error)
+	}{
+		{
+			name:      "ok",
+			firstname: firstname,
+			checker: func(t *testing.T, users []models.User, err error) {
+				require.NoError(t, err)
+				require.GreaterOrEqual(t, len(users), 10)
+			},
+		},
+		{
+			name:      "not found ",
+			firstname: utils.RandomUserName(),
+			checker: func(t *testing.T, users []models.User, err error) {
+				require.NoError(t, err)
+				require.Equal(t, len(users), 0)
+			},
+		},
+	}
+	for _, tc := range testCase {
+		t.Run(tc.name, func(t *testing.T) {
+			users, err := testdb.GetUserByFirstName(context.Background(), tc.firstname)
+			tc.checker(t, users, err)
+		})
+	}
+}

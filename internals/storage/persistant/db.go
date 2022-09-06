@@ -7,6 +7,7 @@ import (
 	"github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/constants/models"
 	"github.com/alazarbeyeneazu/Simple-Gym-management-system/platforms/utils"
 	"github.com/alazarbeyeneazu/Simple-Gym-management-system/ports"
+	validation "github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/google/uuid"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -61,10 +62,20 @@ func (a *dbAdapter) GetUsers(ctx context.Context) ([]models.User, error) {
 	return users, nil
 }
 func (a *dbAdapter) GetUserByFirstName(ctx context.Context, firstname string) ([]models.User, error) {
+	var users []models.User
+	err := validation.Validate(&firstname, validation.Required)
+	if err != nil {
+		return []models.User{}, err
+	}
+	result := a.db.Where("first_name = ?", firstname).Find(&users)
+	if result.Error != nil {
+		return []models.User{}, result.Error
+	}
 
-	return []models.User{}, nil
+	return users, nil
 }
 func (a *dbAdapter) GetUserByLastName(ctx context.Context, lastname string) ([]models.User, error) {
+
 	return []models.User{}, nil
 }
 func (a *dbAdapter) GetUseByPhoneNumber(ctx context.Context, phonenumber string) (models.User, error) {
