@@ -43,19 +43,30 @@ func (a *dbAdapter) CreateUser(ctx context.Context, user models.User) (models.Us
 	return user, result.Error
 
 }
-func (a *dbAdapter) Delete(ctx context.Context, user models.User) error {
+func (a *dbAdapter) DeleteUser(ctx context.Context, user models.User) error {
 
 	return nil
 }
 
-func (a *dbAdapter) Update(ctx context.Context, user models.User) (models.User, error) {
-	return models.User{}, nil
-}
-
-func (a *dbAdapter) Getuser(ctx context.Context, user models.User) (models.User, error) {
+func (a *dbAdapter) UpdateUser(ctx context.Context, user models.User) (models.User, error) {
 	return models.User{}, nil
 }
 
 func (a *dbAdapter) GetUsers(ctx context.Context) ([]models.User, error) {
+	var users []models.User
+	result := a.db.Find(&users)
+	if result.Error != nil {
+		return []models.User{}, result.Error
+	}
+	return users, nil
+}
+func (a *dbAdapter) GetUserByFirstName(ctx context.Context, firstname string) ([]models.User, error) {
+
 	return []models.User{}, nil
+}
+func (a *dbAdapter) GetUserByLastName(ctx context.Context, lastname string) ([]models.User, error) {
+	return []models.User{}, nil
+}
+func (a *dbAdapter) GetUseByPhoneNumber(ctx context.Context, phonenumber string) (models.User, error) {
+	return models.User{}, nil
 }

@@ -100,3 +100,19 @@ func TestCreateUser(t *testing.T) {
 	}
 
 }
+
+func TestGetUsers(t *testing.T) {
+	testdb := Init()
+	for i := 0; i < 10; i++ {
+		randomeUser := models.User{
+			FirstName:   utils.RandomUserName(),
+			LastName:    utils.RandomUserName(),
+			PhoneNumber: utils.RandomePhoneNumber(),
+			Password:    utils.RandomPassword(),
+		}
+		testdb.CreateUser(context.Background(), randomeUser)
+	}
+	result, err := testdb.GetUsers(context.Background())
+	require.NoError(t, err)
+	require.GreaterOrEqual(t, len(result), 10)
+}
