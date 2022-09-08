@@ -6,6 +6,8 @@ import (
 	"github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/constants/models"
 )
 
+//go:generate echo $PWD - $GOPACKAGE - $GOFILE
+//go:generate mockgen -package mockdb -destination ../mocks/db/mockdb.go github.com/alazarbeyeneazu/Simple-Gym-management-system/ports DBPort
 type DBPort interface {
 	CreateUser(ctx context.Context, user models.User) (models.User, error)
 	DeleteUser(ctx context.Context, user models.User) error
