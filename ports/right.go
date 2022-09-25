@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/constants/models"
+	"github.com/google/uuid"
 )
 
 //go:generate echo $PWD - $GOPACKAGE - $GOFILE
@@ -16,4 +17,5 @@ type DBPort interface {
 	GetUserByFirstName(ctx context.Context, firstname string) ([]models.User, error)
 	GetUserByLastName(ctx context.Context, lastname string) ([]models.User, error)
 	GetUseByPhoneNumber(ctx context.Context, phonenumber string) (models.User, error)
+	GetUserById(ctx context.Context, id uuid.UUID) (models.User, error)
 }

@@ -10,6 +10,7 @@ import (
 
 	models "github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/constants/models"
 	gomock "github.com/golang/mock/gomock"
+	uuid "github.com/google/uuid"
 )
 
 // MockDBPort is a mock of DBPort interface.
@@ -92,6 +93,21 @@ func (m *MockDBPort) GetUserByFirstName(arg0 context.Context, arg1 string) ([]mo
 func (mr *MockDBPortMockRecorder) GetUserByFirstName(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserByFirstName", reflect.TypeOf((*MockDBPort)(nil).GetUserByFirstName), arg0, arg1)
+}
+
+// GetUserById mocks base method.
+func (m *MockDBPort) GetUserById(arg0 context.Context, arg1 uuid.UUID) (models.User, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserById", arg0, arg1)
+	ret0, _ := ret[0].(models.User)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserById indicates an expected call of GetUserById.
+func (mr *MockDBPortMockRecorder) GetUserById(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserById", reflect.TypeOf((*MockDBPort)(nil).GetUserById), arg0, arg1)
 }
 
 // GetUserByLastName mocks base method.

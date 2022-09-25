@@ -169,3 +169,17 @@ func (a *dbAdapter) GetUseByPhoneNumber(ctx context.Context, phonenumber string)
 	}
 	return user, nil
 }
+
+func (a *dbAdapter) GetUserById(ctx context.Context, id uuid.UUID) (models.User, error) {
+	var user models.User
+	err := validation.Validate(id, validation.Required, is.UUID)
+	if err != nil {
+		return models.User{}, fmt.Errorf("phone number %s", err.Error())
+	}
+
+	result := a.db.Where("id = ?", id).First(&user)
+	if result.Error != nil {
+		return models.User{}, err
+	}
+	return user, nil
+}

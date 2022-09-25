@@ -9,6 +9,8 @@ import (
 
 type UserService interface {
 	RegisterUser(ctx context.Context, user models.User) (models.User, error)
+	GetUserById(ctx context.Context, user models.User) (models.User, error)
+	GetUsersByFirstName(ctx context.Context, user models.User) ([]models.User, error)
 }
 type userService struct {
 	db ports.DBPort

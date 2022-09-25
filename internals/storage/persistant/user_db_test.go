@@ -7,6 +7,7 @@ import (
 
 	"github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/constants/models"
 	"github.com/alazarbeyeneazu/Simple-Gym-management-system/platforms/utils"
+	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"
 )
 
@@ -238,6 +239,46 @@ func TestGetUserByPhoneNumber(t *testing.T) {
 	for _, tc := range testCase {
 		t.Run(tc.name, func(t *testing.T) {
 			user, err := testdb.GetUseByPhoneNumber(context.Background(), tc.phoneNumber)
+			tc.checker(t, user, err)
+		})
+	}
+}
+
+func TestGetUserById(t *testing.T) {
+	testdb := Init()
+	randomeUser := models.User{
+		LastName:    utils.RandomUserName(),
+		FirstName:   utils.RandomUserName(),
+		PhoneNumber: utils.RandomePhoneNumber(),
+		Password:    utils.RandomPassword(),
+	}
+	result, _ := testdb.CreateUser(context.Background(), randomeUser)
+	testCase := []struct {
+		name    string
+		id      uuid.UUID
+		checker func(t *testing.T, user models.User, err error)
+	}{
+		{
+			name: "ok",
+			id:   result.ID,
+			checker: func(t *testing.T, user models.User, err error) {
+				require.NoError(t, err)
+				require.Equal(t, user.ID, result.ID)
+
+			},
+		}, {
+			name: "not found ",
+			id:   uuid.New(),
+			checker: func(t *testing.T, user models.User, err error) {
+				require.NoError(t, err)
+				require.Empty(t, user)
+
+			},
+		},
+	}
+	for _, tc := range testCase {
+		t.Run(tc.name, func(t *testing.T) {
+			user, err := testdb.GetUserById(context.Background(), tc.id)
 			tc.checker(t, user, err)
 		})
 	}
