@@ -146,3 +146,141 @@ func TestGetUsersByFirstName(t *testing.T) {
 	}
 
 }
+
+//get users by last name test
+func TestGetUsersByLastName(t *testing.T) {
+	lastname := utils.RandomUserName()
+	var respondUser []models.User
+	for i := 0; i < 10; i++ {
+		resp := models.User{
+			ID:          uuid.New(),
+			FirstName:   utils.RandomUserName(),
+			LastName:    lastname,
+			PhoneNumber: utils.RandomePhoneNumber(),
+			Password:    utils.RandomPassword(),
+		}
+		respondUser = append(respondUser, resp)
+	}
+
+	ctr := gomock.NewController(t)
+	db := mockdb.NewMockDBPort(ctr)
+	defer ctr.Finish()
+
+	appuser := InitService(db)
+	testCase := []struct {
+		name    string
+		user    models.User
+		checker func(t *testing.T, user []models.User, err error)
+	}{
+		{
+			name: "ok",
+			user: models.User{LastName: lastname},
+			checker: func(t *testing.T, user []models.User, err error) {
+				require.Equal(t, len(user), 10)
+				require.NoError(t, err)
+
+			},
+		}, {
+			name: "not found",
+			user: models.User{LastName: utils.RandomUserName()},
+			checker: func(t *testing.T, user []models.User, err error) {
+				require.EqualError(t, err, "user not found")
+
+			},
+		}, {
+			name: "empty lastname",
+			user: models.User{},
+			checker: func(t *testing.T, user []models.User, err error) {
+				require.EqualError(t, err, "last name cannot be blank")
+
+			},
+		},
+	}
+	for _, tc := range testCase {
+		t.Run(tc.name, func(t *testing.T) {
+			switch tc.name {
+			case "ok":
+				db.EXPECT().GetUserByLastName(gomock.Any(), gomock.Any()).Return(respondUser, nil)
+				user, err := appuser.GetUserByLastName(context.Background(), tc.user)
+				tc.checker(t, user, err)
+			case "not found":
+				db.EXPECT().GetUserByLastName(gomock.Any(), gomock.Any()).Return([]models.User{}, errors.New("user not found"))
+				user, err := appuser.GetUserByLastName(context.Background(), tc.user)
+				tc.checker(t, user, err)
+			case "empty lastname":
+				user, err := appuser.GetUserByLastName(context.Background(), tc.user)
+				tc.checker(t, user, err)
+
+			}
+
+		})
+	}
+
+}
+
+//get users by last name test
+func TestGetUserByPhoneNumber(t *testing.T) {
+
+	respondUser := models.User{
+		ID:          uuid.New(),
+		FirstName:   utils.RandomUserName(),
+		LastName:    utils.RandomUserName(),
+		PhoneNumber: utils.RandomePhoneNumber(),
+		Password:    utils.RandomPassword(),
+	}
+
+	ctr := gomock.NewController(t)
+	db := mockdb.NewMockDBPort(ctr)
+	defer ctr.Finish()
+
+	appuser := InitService(db)
+	testCase := []struct {
+		name    string
+		user    models.User
+		checker func(t *testing.T, user models.User, err error)
+	}{
+		{
+			name: "ok",
+			user: models.User{PhoneNumber: respondUser.PhoneNumber},
+			checker: func(t *testing.T, user models.User, err error) {
+
+				require.NoError(t, err)
+
+			},
+		}, {
+			name: "not found",
+			user: models.User{PhoneNumber: utils.RandomePhoneNumber()},
+			checker: func(t *testing.T, user models.User, err error) {
+				require.EqualError(t, err, "user not found")
+
+			},
+		}, {
+			name: "empty lastname",
+			user: models.User{},
+			checker: func(t *testing.T, user models.User, err error) {
+				require.EqualError(t, err, "phone number cannot be blank")
+
+			},
+		},
+	}
+	for _, tc := range testCase {
+		t.Run(tc.name, func(t *testing.T) {
+			switch tc.name {
+			case "ok":
+				db.EXPECT().GetUseByPhoneNumber(gomock.Any(), gomock.Any()).Return(respondUser, nil)
+				user, err := appuser.GetUserByPhoneNumber(context.Background(), tc.user)
+				tc.checker(t, user, err)
+			case "not found":
+				db.EXPECT().GetUseByPhoneNumber(gomock.Any(), gomock.Any()).Return(models.User{}, errors.New("user not found"))
+				user, err := appuser.GetUserByPhoneNumber(context.Background(), tc.user)
+				tc.checker(t, user, err)
+			case "empty lastname":
+				user, err := appuser.GetUserByPhoneNumber(context.Background(), tc.user)
+				tc.checker(t, user, err)
+
+			}
+
+		})
+	}
+
+}

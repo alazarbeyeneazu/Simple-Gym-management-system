@@ -37,3 +37,34 @@ func (us *userService) GetUsersByFirstName(ctx context.Context, user models.User
 	}
 	return users, nil
 }
+
+//get user by Last name
+func (us *userService) GetUserByLastName(ctx context.Context, user models.User) ([]models.User, error) {
+	err := validation.Validate(user.LastName, validation.Required)
+	if err != nil {
+		return []models.User{}, fmt.Errorf("last name %s", err.Error())
+	}
+	users, err := us.db.GetUserByLastName(ctx, user.LastName)
+	if err != nil {
+		return []models.User{}, err
+	}
+	return users, nil
+}
+
+//get user by Last name
+func (us *userService) GetUserByPhoneNumber(ctx context.Context, user models.User) (models.User, error) {
+
+	if len(user.PhoneNumber) == 10 {
+		user.PhoneNumber = "+251" + user.PhoneNumber[1:]
+	}
+
+	err := validation.Validate(user.PhoneNumber, validation.Required, validation.Length(13, 13))
+	if err != nil {
+		return models.User{}, fmt.Errorf("phone number %s", err.Error())
+	}
+	users, err := us.db.GetUseByPhoneNumber(ctx, user.PhoneNumber)
+	if err != nil {
+		return models.User{}, err
+	}
+	return users, nil
+}
