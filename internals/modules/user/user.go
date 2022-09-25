@@ -14,6 +14,7 @@ type UserService interface {
 	GetUserByLastName(ctx context.Context, user models.User) ([]models.User, error)
 	GetUserByPhoneNumber(ctx context.Context, user models.User) (models.User, error)
 	GetAllUsers(ctx context.Context) ([]models.User, error)
+	DeleteUser(ctx context.Context, user models.User) error
 }
 type userService struct {
 	db ports.DBPort
