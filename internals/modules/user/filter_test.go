@@ -284,3 +284,62 @@ func TestGetUserByPhoneNumber(t *testing.T) {
 	}
 
 }
+
+//get all users
+func TestGetAllUsers(t *testing.T) {
+
+	var respondUser []models.User
+	for i := 0; i < 10; i++ {
+		resp := models.User{
+			ID:          uuid.New(),
+			FirstName:   utils.RandomUserName(),
+			LastName:    utils.RandomUserName(),
+			PhoneNumber: utils.RandomePhoneNumber(),
+			Password:    utils.RandomPassword(),
+		}
+		respondUser = append(respondUser, resp)
+	}
+
+	ctr := gomock.NewController(t)
+	db := mockdb.NewMockDBPort(ctr)
+	defer ctr.Finish()
+
+	appuser := InitService(db)
+	testCase := []struct {
+		name    string
+		checker func(t *testing.T, user []models.User, err error)
+	}{
+		{
+			name: "ok",
+
+			checker: func(t *testing.T, user []models.User, err error) {
+				require.Equal(t, len(user), 10)
+				require.NoError(t, err)
+
+			},
+		}, {
+			name: "empty users",
+			checker: func(t *testing.T, user []models.User, err error) {
+				require.NoError(t, err)
+				require.Empty(t, user)
+
+			},
+		},
+	}
+	for _, tc := range testCase {
+		t.Run(tc.name, func(t *testing.T) {
+			switch tc.name {
+			case "ok":
+				db.EXPECT().GetUsers(gomock.Any()).Return(respondUser, nil)
+				user, err := appuser.GetAllUsers(context.Background())
+				tc.checker(t, user, err)
+			case "empty users":
+				db.EXPECT().GetUsers(gomock.Any()).Return([]models.User{}, nil)
+				user, err := appuser.GetAllUsers(context.Background())
+				tc.checker(t, user, err)
+
+			}
+
+		})
+	}
+}

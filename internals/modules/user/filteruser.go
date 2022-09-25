@@ -68,3 +68,8 @@ func (us *userService) GetUserByPhoneNumber(ctx context.Context, user models.Use
 	}
 	return users, nil
 }
+
+//get all users
+func (us *userService) GetAllUsers(ctx context.Context) ([]models.User, error) {
+	return us.db.GetUsers(ctx)
+}
