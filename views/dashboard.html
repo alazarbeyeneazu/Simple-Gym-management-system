@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/fonts/css/all.css">
+  <link rel="stylesheet" href="/style/dashboard/home.css">
+  <script src="../../assets/charts/package/dist/chart.min.js"></script>
+    <title>Home</title>
+</head>
+<body>
+    <section>
+      <!-- left bar -->
+       <a href="" id="collapser">
+        <span class="fa fa-bars" id="collapsericon"></span>
+       </a>
+         <!-- left bar -->
+         {{ template "leftmenubar.html" .}}
+         <!-- left bar end -->
+         <!-- end of left bar -->
+
+         <!-- top icons -->
+      <div class="topbodystatus">
+        <div class="icondiv">
+          <span class="icon fa fa-dumbbell">  </span><span class="name">Gym-goers</span>
+          <h3>300</h3>
+          
+        </div>
+        <div class="icondiv">
+          <span class="icon fa fa-users">  </span><span class="name">Total Users</span>
+          <h3>300</h3>
+          
+        </div>
+        <div class="icondiv">
+          <span class="icon fa fa-scale-unbalanced">  </span><span class="name">Today</span>
+          <h3>300</h3>
+          
+        </div>
+        <div class="icondiv">
+          <span class="icon fa fa-stopwatch">  </span><span class="name">Gym-goers</span>
+          <h3>300</h3>
+          
+        </div>
+      </div>
+         <!-- end of top icons -->
+         <!-- charts  -->
+        <div class="chartscont">
+          <div>
+            <canvas id="linechart"></canvas>
+          </div>
+          <div>
+            <canvas id="piechart"></canvas>
+          </div>
+        </div>
+         <!-- end of charts -->
+         <!-- start of list -->
+         <section>
+           <div class="tablescontainer">
+        <div class="tablecontainer">
+          <table class="tablelister">
+            <tr>
+              <th>Fist Name </th> <th>Last Name </th> <th>Service Type </th> <th>Action</th>
+            </tr>
+            
+          </tr>            <tr>
+            <td>Alazar </td> <td>Beyene </td> <td>Monthly </td> <td><button>detail</button></td>
+          </tr>
+        </tr>            <tr>
+          <td>Alazar </td> <td>Beyene </td> <td>Monthly </td> <td><button>detail</button></td>
+        </tr>
+      </tr>            <tr>
+        <td>Alazar </td> <td>Beyene </td> <td>Monthly </td> <td><button>detail</button></td>
+      </tr>
+    </tr>            <tr>
+      <td>Alazar </td> <td>Beyene </td> <td>Monthly </td> <td><button>detail</button></td>
+    </tr>
+  </tr>            <tr>
+    <td>Alazar </td> <td>Beyene </td> <td>Monthly </td> <td><button>detail</button></td>
+  </tr>
+</tr>            <tr>
+  <td>Alazar </td> <td>Beyene </td> <td>Monthly </td> <td><button>detail</button></td>
+</tr>
+</tr>            <tr>
+<td>Alazar </td> <td>Beyene </td> <td>Monthly </td> <td><button>detail</button></td>
+</tr>
+</tr>            <tr>
+<td>Alazar </td> <td>Beyene </td> <td>Monthly </td> <td><button>detail</button></td>
+</tr>
+</tr>            <tr>
+<td>Alazar </td> <td>Beyene </td> <td>Monthly </td> <td><button>detail</button></td>
+</tr>
+</tr>            <tr>
+<td>Alazar </td> <td>Beyene </td> <td>Monthly </td> <td><button>detail</button></td>
+</tr>
+</tr>            <tr>
+<td>Alazar </td> <td>Beyene </td> <td>Monthly </td> <td><button>detail</button></td>
+</tr>
+</tr>            <tr>
+<td>Alazar </td> <td>Beyene </td> <td>Monthly </td> <td><button>detail</button></td>
+</tr>
+
+           
+           </table>
+        </div>
+            
+           </div>
+         </section>
+         <!-- end of list -->
+    </section>
+
+
+
+    <script>
+      const labels = [
+        'Monday',
+        'Thusday',
+        'wensday',
+        'Thursday',
+        'Friday',
+        'Saterday',
+        'sunday'
+      ];
+    
+      const data = {
+        labels: labels,
+        datasets: [{
+          label: 'This week logins',
+          backgroundColor:['#00df8a','#1a8fe3','#1ae364','#e3c11a','#e01ae3','#e37b1a','#53e31a'],
+            
+          data: [0, 10, 5, 2, 20, 30, 45],
+        }]
+      };
+    
+      const config = {
+        type: 'line',
+        data: data,
+        options: {
+          legend:{
+             display:false
+          }
+        }
+      };
+      const piechartconfig = {
+        type: 'doughnut',
+        data: data,
+        options: {
+          legend:{
+             display:false
+          }
+        }
+      };
+    </script>
+
+    <script>
+      const linechart = new Chart(
+        document.getElementById('linechart'),
+        config
+      );
+      const piechart =  new Chart(
+        document.getElementById('piechart'),
+        piechartconfig
+      );
+    </script>
+
+<script src="/script/collapser/home.js"></script>
+</body>
+</html>

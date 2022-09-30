@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/index/index.css">
+    <title>DeAfric GYM</title>
+</head>
+<body>
+    <script>
+    
+        ()=>{
+            el = document.documentElement;
+            el.requestFullscreen();
+        }
+    </script>
+    <section>
+    <div>
+        <div class="form">
+            <h1>Africa Gym</h1>
+            <form id="myForm" action="http://localhost:8282/v1/api/user" method="post">
+               <div>
+                <p id="error" style="color:red;text-align: center;">{{.error}}</p>
+               </div>
+                <div class="input">
+                 <input type="text" placeholder="Phone Number" name="phone_number">
+                 <input type="password" placeholder="Password" name="password">
+                </div>
+                <div class="btns">
+                 <button>Sign In </button>
+                 <a href="">forgot password</a>
+                </div>
+                 
+             </form>
+           </div>
+    </div>
+    </section>
+    <script>
+
+      
+
+function handleSubmit(event) {
+    event.preventDefault();
+
+    const data = new FormData(event.target);
+
+    const value = Object.fromEntries(data.entries());
+
+   //      
+var xhr = new XMLHttpRequest();
+
+xhr.open("POST", "/v1/api/user", true);
+xhr.setRequestHeader("Content-Type", "application/json");
+xhr.onload=function(){
+ 
+ if (xhr.status !="200"){
+    document.getElementById("error").innerText=JSON.parse(xhr.responseText).error
+ }else{
+   
+    window.location.href = "http://localhost:8282/view/dashboard"
+ }
+
+   
+}
+xhr.send(JSON.stringify(value));
+
+}
+
+  const form = document.querySelector('form');
+  form.addEventListener('submit', handleSubmit);
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/fonts/css/all.css">
+  <link rel="stylesheet" href="/style/setting/home.css">
+    <title>Home</title>
+</head>
+<body>
+    <section>
+      <!-- left bar -->
+       <a href="" id="collapser">
+        <span class="fa fa-bars" id="collapsericon"></span>
+       </a>
+       {{ template "leftmenubar.html" .}}
+         <!-- end of left bar -->
+   <div class="forms">
+    <div class="legend">
+      <h1>Setting</h1>
+    </div>
+<div class="formsQr">
+  <div class="formhandler">
+      
+    <!-- form -->
+    <div class="form">
+      <div class="row">
+        <input type="text" placeholder="First Name" value="{{.FirstName}}">
+        <input type="text" placeholder="Last Name" value="{{.LastName}}">
+      </div>
+      
+      <div class="row">
+        <input type="text" placeholder="Phone Number " value="{{.PhoneNumber}}">
+        <input type="text" class="role" value="Administrator" disabled>
+        
+      </div>
+      <div class="row">
+        <input type="text" placeholder="Old Password" >
+        <input type="text" placeholder="New Password" >
+        <input type="text" placeholder="Confirm New Password" >
+        
+      </div>
+      <div class="row">
+        <button class="register">Update</button><button class="reset">Reset</button>
+      </div>
+<!-- end of form -->
+
+      <!-- qr generator -->
+        
+    </div>
+   </div>
+   <div class="qrgenerator">
+    <img src="/assets/me.jpg" alt="">
+    <div class="userInfo">
+        
+
+        <input type="file" placeholder="Update New Image">
+        
+        
+    </div>
+  </div>
+</div>
+   </div>
+ 
+<script src="/script/collapser/home.js"></script>
+</body>
+</html>
