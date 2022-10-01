@@ -9,7 +9,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (uh *userHanlder) GetRegistrationPage(ctx *gin.Context) {
+func (uh *restHandler) GetRegistrationPage(ctx *gin.Context) {
 
 	user, er := ctx.Get("userid")
 	if !er {
@@ -23,12 +23,12 @@ func (uh *userHanlder) GetRegistrationPage(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "user.html", usr)
 }
 
-func (uh *userHanlder) GetLoginPage(ctx *gin.Context) {
+func (uh *restHandler) GetLoginPage(ctx *gin.Context) {
 	err, _ := ctx.Cookie("error")
 	ctx.HTML(http.StatusOK, "index.html", gin.H{"error": err})
 
 }
-func (uh *userHanlder) GetDashBoard(ctx *gin.Context) {
+func (uh *restHandler) GetDashBoard(ctx *gin.Context) {
 	user, er := ctx.Get("userid")
 	if !er {
 		log.Println("user id not found")
@@ -41,7 +41,7 @@ func (uh *userHanlder) GetDashBoard(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "dashboard.html", usr)
 
 }
-func (uh *userHanlder) GetRoles(ctx *gin.Context) {
+func (uh *restHandler) GetRoles(ctx *gin.Context) {
 	user, er := ctx.Get("userid")
 	if !er {
 		log.Println("user id not found")
@@ -54,7 +54,7 @@ func (uh *userHanlder) GetRoles(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "roles.html", usr)
 
 }
-func (uh *userHanlder) GetGym_goers(ctx *gin.Context) {
+func (uh *restHandler) GetGym_goers(ctx *gin.Context) {
 	user, er := ctx.Get("userid")
 	if !er {
 		log.Println("user id not found")
@@ -67,7 +67,7 @@ func (uh *userHanlder) GetGym_goers(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "gym-goers.html", usr)
 
 }
-func (uh *userHanlder) GetPayment(ctx *gin.Context) {
+func (uh *restHandler) GetPayment(ctx *gin.Context) {
 	user, er := ctx.Get("userid")
 	if !er {
 		log.Println("user id not found")
@@ -80,7 +80,7 @@ func (uh *userHanlder) GetPayment(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "pyments.html", usr)
 
 }
-func (uh *userHanlder) GetSetting(ctx *gin.Context) {
+func (uh *restHandler) GetSetting(ctx *gin.Context) {
 	user, er := ctx.Get("userid")
 	if !er {
 		log.Println("user id not found")
@@ -93,7 +93,7 @@ func (uh *userHanlder) GetSetting(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "setting.html", usr)
 
 }
-func (uh *userHanlder) GetGym_goers_detail(ctx *gin.Context) {
+func (uh *restHandler) GetGym_goers_detail(ctx *gin.Context) {
 
 	ctx.HTML(http.StatusOK, "gym-goers-detail.html", gin.H{"error": ""})
 

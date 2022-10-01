@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (uh *userHanlder) StartRoutes() []routers.Router {
+func (uh *restHandler) StartRoutes() []routers.Router {
 	registerUser := []routers.Router{
 		{
 			Method:      http.MethodGet,
@@ -64,6 +64,23 @@ func (uh *userHanlder) StartRoutes() []routers.Router {
 			Method:  http.MethodPost,
 			Path:    "/v1/api/user",
 			Handler: uh.LoginUser,
+		},
+		{
+			Method:  http.MethodGet,
+			Path:    "/v1/api/pyments",
+			Handler: uh.GetAllPyments,
+		}, {
+			Method:  http.MethodPost,
+			Path:    "/v1/api/pyments",
+			Handler: uh.CreatePyment,
+		}, {
+			Method:  http.MethodPut,
+			Path:    "/v1/api/pyments",
+			Handler: uh.UpdatePyment,
+		}, {
+			Method:  http.MethodDelete,
+			Path:    "/v1/api/pyments",
+			Handler: uh.DeletePyment,
 		},
 	}
 

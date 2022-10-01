@@ -1,7 +1,7 @@
 package initator
 
 import (
-	handler "github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/handlers/rest/user"
+	handler "github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/handlers/rest/gym"
 	"github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/modules/user"
 	"github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/storage/persistant"
 	routers "github.com/alazarbeyeneazu/Simple-Gym-management-system/platforms/routes"
