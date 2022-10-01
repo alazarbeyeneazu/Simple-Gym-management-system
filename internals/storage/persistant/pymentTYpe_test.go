@@ -156,3 +156,47 @@ func TestCreatePymentType(t *testing.T) {
 		})
 	}
 }
+
+func TestDeletePyment(t *testing.T) {
+
+	testdb := Init()
+	validPyment := models.PymentType{
+		PymentType:         utils.RandomUserName(),
+		CreatedByFirstName: utils.RandomUserName(),
+		CreatedByLastName:  utils.RandomUserName(),
+		Payment:            "1500 ETB",
+		NumberOfDays:       30,
+		PaidBy:             "Bank Transfer",
+	}
+	pyment, _ := testdb.CreatePymentType(context.Background(), validPyment)
+
+	testCase := []struct {
+		name   string
+		pyment models.PymentType
+		check  func(t *testing.T, err error)
+	}{
+		{
+			name:   "ok",
+			pyment: models.PymentType{ID: pyment.ID},
+			check: func(t *testing.T, err error) {
+				require.NoError(t, err)
+
+			},
+		}, {
+			name:   "empty id",
+			pyment: models.PymentType{},
+			check: func(t *testing.T, err error) {
+				require.Error(t, err)
+				require.EqualError(t, errors.New("empy pyment id"), err.Error())
+
+			},
+		},
+	}
+
+	for _, tc := range testCase {
+		t.Run(tc.name, func(t *testing.T) {
+			err := testdb.DeletePyment(context.Background(), tc.pyment)
+			tc.check(t, err)
+		})
+	}
+}
