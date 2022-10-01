@@ -6,3 +6,5 @@ migrate_create:
 	migrate create -ext sql -dir ./internal/storage/persistant/migration -seq gym
 sqlc:
 	sqlc generate
+gomock:
+	go generate ./...

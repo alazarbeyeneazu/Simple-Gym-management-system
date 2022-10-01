@@ -1,0 +1,76 @@
+*{
+    padding: 0;
+    margin: 0;
+    outline: 0;
+    border: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+}
+body{
+  background-image: url("../../assets/images/gym-reopening.jpg");
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+}
+
+section{
+    width: 100vw;
+    height: 100vh;
+}
+
+
+.form{
+    width: 400px;
+    height: 300px;
+    position: absolute;
+    left: 50vw;
+    transform: translate(-50%,-50%);
+    top: 50vh;
+    background: white;
+    padding-top: 50px;
+    box-shadow: #0095ff 0px 0px 4px;
+    border-radius: 5px;
+}
+.form::before{
+    content: '';
+    position: absolute;
+    top: -50;
+    width: 400px;
+    background: linear-gradient(0deg,transparent,#ff4545) !important;
+
+}
+.form input{
+    width: 300px;
+    margin-left: 50px;
+    height: 40px;
+    margin-top: 10px;
+    background: rgb(255, 255, 255);
+    padding-left: 10px;
+  
+}
+.form button{
+    width: 120px;
+    margin-left: 50px;
+    height: 40px;
+    margin-top: 10px;
+    background: #1a8fe3;
+    padding-left: 10px;
+    outline: none;
+    cursor: pointer;
+    border-radius: 5px;
+
+}
+.form button:hover{
+    color: white;
+}
+.form a{
+    text-decoration: none;
+    color: #1a8fe3;
+    padding-left: 20px;
+}
+h1{
+    text-align: center;
+    font-size: 30px;
+    color: #1a8fe3;
+}
