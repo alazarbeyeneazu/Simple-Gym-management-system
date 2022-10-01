@@ -16,4 +16,5 @@ type Gym_goers struct {
 	CreatedByPhoneNumber string    `json:"created_by_phonenumber"`
 	StartDate            time.Time `json:"start_date"`
 	EndDate              time.Time `json:"end_date"`
+	PaidBy               string    `json:"paid_by"`
 }

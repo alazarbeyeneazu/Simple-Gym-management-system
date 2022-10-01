@@ -24,4 +24,12 @@ type DBPort interface {
 	GetPymentById(ctx context.Context, pyment models.PymentType) (models.PymentType, error)
 	UpdatePyment(ctx context.Context, pyment models.PymentType) (models.PymentType, error)
 	CreateGymGoers(ctx context.Context, gym_goers models.Gym_goers) (models.Gym_goers, error)
+	DeleteGymGoers(ctx context.Context, gymGors models.Gym_goers) error
+	GetAllGymGoers(cxt context.Context) ([]models.Gym_goers, error)
+	GetGYmGorsById(cxt context.Context, gym_goers models.Gym_goers) (models.Gym_goers, error)
+	GetGymGoerByUserId(ctx context.Context, gym_goers models.Gym_goers) (models.Gym_goers, error)
+	GetGymGoerByCreatedByFirstName(ctx context.Context, gym_goers models.User) ([]models.Gym_goers, error)
+	GetGymGoerByCreatedByLastName(ctx context.Context, gym_goers models.User) ([]models.Gym_goers, error)
+	GetGymGoerByCreatedByPhoneNumber(ctx context.Context, gym_goers models.User) ([]models.Gym_goers, error)
+	GetGymGoerByPaidBy(ctx context.Context, gym_goers models.Gym_goers) ([]models.Gym_goers, error)
 }
