@@ -13,6 +13,5 @@ type PymentType struct {
 	CreatedByFirstName string    `json:"created_by_firstname"`
 	CreatedByLastName  string    `json:"created_by_lastname"`
 	Payment            string    `json:"pyment"`
-	PaidBy             string    `json:"paid_by"`
 	NumberOfDays       int64     `json:"number_of_days"`
 }

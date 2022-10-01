@@ -15,7 +15,6 @@ func (a *dbAdapter) CreatePymentType(ctx context.Context, pyment models.PymentTy
 		validation.Field(&pyment.CreatedByLastName, validation.Required),
 		validation.Field(&pyment.NumberOfDays, validation.Required, validation.Min(1)),
 		validation.Field(&pyment.Payment, validation.Required),
-		validation.Field(&pyment.PaidBy),
 		validation.Field(&pyment.PymentType, validation.Required),
 	)
 	if err != nil {
@@ -43,5 +42,30 @@ func (a *dbAdapter) DeletePyment(ctx context.Context, pyment models.PymentType) 
 		return result.Error
 	}
 	return nil
+
+}
+
+func (a *dbAdapter) GetAllPyments(ctx context.Context) ([]models.PymentType, error) {
+	var pyments []models.PymentType
+	result := a.db.Find(&pyments)
+	if result.Error != nil {
+		return []models.PymentType{}, result.Error
+	}
+	return pyments, nil
+}
+func (a *dbAdapter) GetPymentById(ctx context.Context, pyment models.PymentType) (models.PymentType, error) {
+	var pymt models.PymentType
+	err := validation.Validate(&pyment.ID, validation.Required)
+	if err != nil {
+		return models.PymentType{}, err
+	}
+	if pyment.ID == uuid.MustParse("00000000-0000-0000-0000-000000000000") {
+		return models.PymentType{}, errors.New("empy pyment id")
+	}
+	result := a.db.Where("id = ?", pyment.ID).Find(&pymt)
+	if result.Error != nil {
+		return models.PymentType{}, result.Error
+	}
+	return pymt, nil
 
 }
