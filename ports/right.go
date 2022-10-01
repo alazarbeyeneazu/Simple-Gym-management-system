@@ -23,4 +23,5 @@ type DBPort interface {
 	GetAllPyments(ctx context.Context) ([]models.PymentType, error)
 	GetPymentById(ctx context.Context, pyment models.PymentType) (models.PymentType, error)
 	UpdatePyment(ctx context.Context, pyment models.PymentType) (models.PymentType, error)
+	CreateGymGoers(ctx context.Context, gym_goers models.Gym_goers) (models.Gym_goers, error)
 }

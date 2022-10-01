@@ -25,8 +25,7 @@ func Init() ports.DBPort {
 	if err != nil {
 		log.Fatal(err)
 	}
-	db.AutoMigrate(&models.User{})
-	db.AutoMigrate(&models.PymentType{})
+	db.AutoMigrate(&models.User{}, &models.PymentType{}, &models.Gym_goers{})
 
 	return &dbAdapter{db: db}
 }
