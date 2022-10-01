@@ -8,7 +8,10 @@
     text-decoration: none;
 }
 body{
-    background: #eff7fd;
+  background-image: url("../../assets/images/gym-reopening.jpg");
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
 }
 
 section{

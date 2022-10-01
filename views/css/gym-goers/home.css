@@ -178,6 +178,9 @@ nav li:hover a{
 .userInfo {
   margin-left:50px; 
 }
+#qrcode{
+    margin-bottom: 30px;
+}
 .userInfo button{
     color: white;
  
@@ -201,6 +204,8 @@ nav li:hover a{
     position: absolute;
     top: 550px;
     left: 5vw;
+    box-shadow: #0095ff 0px 0px 4px;
+    border-radius: 5px;
     background-color: white;
     box-shadow: 0px 0px 4px #03233a;
   

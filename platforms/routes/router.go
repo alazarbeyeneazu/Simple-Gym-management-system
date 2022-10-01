@@ -56,6 +56,7 @@ func (r *routing) Serve() {
 	router.Static("/script", "../views/js")
 	router.Static("/fonts", "../views/fontawesome-free-6.2.0-web")
 	router.Static("/assets", "../views/assets")
+	router.Static("/favicon.ico", "../views/assets/fv.ico")
 
 	router.Run(r.serverAddress)
 

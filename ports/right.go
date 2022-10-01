@@ -18,4 +18,5 @@ type DBPort interface {
 	GetUserByLastName(ctx context.Context, lastname string) ([]models.User, error)
 	GetUseByPhoneNumber(ctx context.Context, phonenumber string) (models.User, error)
 	GetUserById(ctx context.Context, id uuid.UUID) (models.User, error)
+	CreatePymentType(ctx context.Context, pyment models.PymentType) (models.PymentType, error)
 }
