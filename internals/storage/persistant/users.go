@@ -80,7 +80,7 @@ func (a *dbAdapter) UpdateUser(ctx context.Context, newUser, user models.User) (
 		if err != nil {
 			return user, fmt.Errorf("first_name %s", err.Error())
 		}
-		a.db.Exec("UPDATE users set first_name = ?", newUser.FirstName)
+		a.db.Where("id == ? ", user.ID).Exec("UPDATE users set first_name = ?", newUser.FirstName)
 
 	}
 	if len(newUser.LastName) > 0 {
@@ -88,7 +88,7 @@ func (a *dbAdapter) UpdateUser(ctx context.Context, newUser, user models.User) (
 		if err != nil {
 			return user, fmt.Errorf("last_name %s", err.Error())
 		}
-		a.db.Exec("UPDATE users set last_name = ?", newUser.LastName)
+		a.db.Where("id = ? ", user.ID).Exec("UPDATE users set last_name = ?", newUser.LastName)
 	}
 	if len(newUser.PhoneNumber) > 0 {
 		if len(newUser.PhoneNumber) == 10 {
@@ -98,7 +98,7 @@ func (a *dbAdapter) UpdateUser(ctx context.Context, newUser, user models.User) (
 		if err != nil {
 			return user, fmt.Errorf("phone_number %s", err.Error())
 		}
-		a.db.Exec("UPDATE users set phone_number = ?", newUser.PhoneNumber)
+		a.db.Where("id = ? ", user.ID).Exec("UPDATE users set phone_number = ?", newUser.PhoneNumber)
 
 	}
 	if len(newUser.Password) > 0 {
@@ -107,7 +107,7 @@ func (a *dbAdapter) UpdateUser(ctx context.Context, newUser, user models.User) (
 		if err != nil {
 			return user, fmt.Errorf("phone_number %s", err.Error())
 		}
-		a.db.Exec("UPDATE users set password = ?", newUser.Password)
+		a.db.Where("id = ? ", user.ID).Exec("UPDATE users set password = ?", newUser.Password)
 
 	}
 	result = a.db.Where("id = ?", user.ID).First(&updatedUser)

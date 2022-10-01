@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (uh *userHanlder) LoginUser(ctx *gin.Context) {
+func (uh *restHandler) LoginUser(ctx *gin.Context) {
 
 	var user models.User
 	if err := ctx.ShouldBind(&user); err != nil {
