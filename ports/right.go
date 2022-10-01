@@ -22,4 +22,5 @@ type DBPort interface {
 	DeletePyment(ctx context.Context, pyment models.PymentType) error
 	GetAllPyments(ctx context.Context) ([]models.PymentType, error)
 	GetPymentById(ctx context.Context, pyment models.PymentType) (models.PymentType, error)
+	UpdatePyment(ctx context.Context, pyment models.PymentType) (models.PymentType, error)
 }

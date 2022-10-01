@@ -255,3 +255,58 @@ func TestGetPymentPyID(t *testing.T) {
 		})
 	}
 }
+
+func TestUpdatePymentType(t *testing.T) {
+
+	testdb := Init()
+
+	validPyment := models.PymentType{
+		PymentType:         utils.RandomUserName(),
+		CreatedByFirstName: utils.RandomUserName(),
+		CreatedByLastName:  utils.RandomUserName(),
+		Payment:            "1500 ETB",
+		NumberOfDays:       30,
+	}
+	updatedPymentType := utils.RandomUserName()
+	updatedPyemnt := "2030 ETB"
+	updatedNumberOfDays := 34
+	py, _ := testdb.CreatePymentType(context.Background(), validPyment)
+
+	testCase := []struct {
+		name   string
+		pyment models.PymentType
+		update []map[string]interface{}
+		check  func(t *testing.T, pyments models.PymentType, err error)
+	}{
+		{
+			name: "all",
+			update: []map[string]interface{}{
+				{"pyment": updatedPyemnt},
+				{"pymentType": updatedPymentType},
+				{"numberofdays": updatedNumberOfDays},
+			},
+			pyment: py,
+			check: func(t *testing.T, pyments models.PymentType, err error) {
+				require.NoError(t, err)
+				require.NotEmpty(t, pyments)
+				require.Equal(t, py.ID, pyments.ID)
+				require.Equal(t, pyments.PymentType, updatedPymentType)
+				require.Equal(t, pyments.NumberOfDays, int64(updatedNumberOfDays))
+				require.Equal(t, pyments.Payment, updatedPyemnt)
+			},
+		},
+	}
+
+	for _, tc := range testCase {
+		t.Run(tc.name, func(t *testing.T) {
+			switch tc.name {
+			case "all":
+				tc.pyment.PymentType = updatedPymentType
+				tc.pyment.Payment = updatedPyemnt
+				tc.pyment.NumberOfDays = int64(updatedNumberOfDays)
+				pyments, err := testdb.UpdatePyment(context.Background(), tc.pyment)
+				tc.check(t, pyments, err)
+			}
+		})
+	}
+}
