@@ -18,3 +18,12 @@ type Gym_goers struct {
 	EndDate              time.Time `json:"end_date"`
 	PaidBy               string    `json:"paid_by"`
 }
+
+type Gym_goerRequest struct {
+	FirstName   string    `json:"first_name"`
+	LastName    string    `json:"last_name"`
+	PhoneNumber string    `json:"phone_number"`
+	PaymentType uuid.UUID `json:"payment_type"`
+	Start_date  string    `json:"start_date"`
+	PaidBy      string    `json:"paid_by"`
+}

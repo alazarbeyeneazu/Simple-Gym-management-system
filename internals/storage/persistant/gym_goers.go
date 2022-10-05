@@ -27,7 +27,8 @@ func (a *dbAdapter) CreateGymGoers(ctx context.Context, gym_goers models.Gym_goe
 	if gym_goers.UserId == uuid.MustParse("00000000-0000-0000-0000-000000000000") {
 		return models.Gym_goers{}, errors.New("user id can not be empty")
 	}
-	if gym_goers.StartDate.Add(time.Hour * 1).Before(time.Now()) {
+	if gym_goers.StartDate.AddDate(0, 0, 1).Before(time.Now()) {
+
 		return models.Gym_goers{}, errors.New("start date should be equal or after today")
 	}
 	if gym_goers.EndDate.Before(gym_goers.StartDate) {

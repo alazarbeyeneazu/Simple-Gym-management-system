@@ -7,7 +7,6 @@ import (
 	"github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/constants/models"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/google/uuid"
-	"gorm.io/gorm"
 )
 
 func (a *dbAdapter) CreatePymentType(ctx context.Context, pyment models.PymentType) (models.PymentType, error) {
@@ -79,20 +78,20 @@ func (a *dbAdapter) UpdatePyment(ctx context.Context, pyment models.PymentType) 
 	if pyment.ID == uuid.MustParse("00000000-0000-0000-0000-000000000000") {
 		return models.PymentType{}, errors.New("empy pyment id")
 	}
-	var result *gorm.DB
+
 	if pyment.NumberOfDays > 0 {
-		result = a.db.Where("id = ?", pyment.ID).Exec("UPDATE pyment_types set number_of_days = ?", pyment.NumberOfDays)
+
+		a.db.Model(&pyment).Where("id = ?", pyment.ID).Update("number_of_days", pyment.NumberOfDays)
 	}
 	if pyment.Payment != "" {
-		result = a.db.Where("id = ?", pyment.ID).Exec("UPDATE pyment_types set payment = ?", pyment.Payment)
+
+		a.db.Model(&pyment).Where("id = ?", pyment.ID).Update("payment", pyment.Payment)
 	}
 	if pyment.PymentType != "" {
-		result = a.db.Where("id = ?", pyment.ID).Exec("UPDATE pyment_types set pyment_type = ?", pyment.PymentType)
+		a.db.Model(&pyment).Where("id = ?", pyment.ID).Update("pyment_type", pyment.PymentType)
+
 	}
 
-	if result.Error != nil {
-		return models.PymentType{}, result.Error
-	}
 	pym, err := a.GetPymentById(ctx, pyment)
 	if err != nil {
 		return models.PymentType{}, err

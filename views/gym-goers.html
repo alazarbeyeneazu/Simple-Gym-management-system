@@ -25,23 +25,34 @@
   <div class="formhandler">
       
     <!-- form -->
+    <form action="" class="form">
     <div class="form">
       <div class="row">
-        <input type="text" placeholder="First Name">
-        <input type="text" placeholder="Last Name">
+        <input type="text" name="first_name" placeholder="First Name">
+        <input type="text" name="last_name" placeholder="Last Name">
       </div>
       
       <div class="row">
-        <input type="text" placeholder="Phone Number ">
-         <select name="type" id="">
-          <option value="Yearly">Yearly</option>
-          <option value="Yearly">Monthly</option>
-          <option value="Yearly">Monthly Cupon</option>
+        <input type="text" name="phone_number" placeholder="Phone Number ">
+         <select name="payment_type" id="">
+          {{range .payments}}
+          <option value="{{.ID}}">{{.PymentType}}</option>
+          {{end}}
          </select>
       </div>
       <div class="row">
-        <button class="register">Register</button><button class="reset">Reset</button>
+        <input name="start_date" type="date" placeholder="Start Date">
+        <select name="paid_by" >
+          <option value="Bank Transfer">Bank Transfer</option>
+          <option value="Cash">Cash</option>
+         
+         </select>
       </div>
+      
+      <div class="row">
+        <button type="submit" class="register">Register</button><button class="reset">Reset</button>
+      </div>
+    </form>
 <!-- end of form -->
 
       <!-- qr generator -->
@@ -51,12 +62,12 @@
    <div class="qrgenerator">
     <div id="qrcode"></div>
     <div class="userInfo">
-        <span class="info">First Name </span> <span>Alazar </span>
+        <span class="info">First Name </span> <span>{{.gymgoerDetailFirstName}} </span>
         <br>
-        <span class="info">Last Name </span> <span>Beyene </span>
+        <span class="info">Last Name </span> <span>{{.gymgoerDetailLastName }} </span>
         <br> 
 
-        <button>CheckIn</button> <a href="/view/gym-goers-detail"><button>Details</button></a>
+        <button>CheckIn</button> <a href="/view/gym-goers-detail/{{.qrid}}"><button>Details</button></a>
         
         
     </div>
@@ -69,78 +80,11 @@
     <input type="text" placeholder="Search" class="search">
   </form>
    <div class="userinfotable">
+    {{range .gym_goers}}
     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
+      <div class="firstname childs">{{.FirstName}}</div> <div class="lastname childs">{{.LastName}}</div> <div class="Action childs"><div class="detail"><a href="/view/gym-goers/{{.ID}}"><button class="detailbtn">Details</button></a> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
      </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Details</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
+     {{end}}
                            
    </div>
 </div>
@@ -148,14 +92,52 @@
 <script src="/script/qr/qrcode.min.js"></script>
 <script>
  var  qrcode=new QRCode(document.getElementById("qrcode"),{
-    text: "http://jindo.dev.naver.com/collie",
+    text: "Alazar Beyene 0975146165",
     width: 128,
     height: 128,
     colorDark : "#000000",
     colorLight : "#ffffff",
     correctLevel : QRCode.CorrectLevel.H
 });
-   qrcode.makeCode({{.ID}})
+   qrcode.makeCode({{.qrid}})
 </script>
+
+<script>
+
+      
+
+  function handleSubmit(event) {
+      event.preventDefault();
+  
+      const data = new FormData(event.target);
+  
+      const value = Object.fromEntries(data.entries());
+  
+     //      
+  var xhr = new XMLHttpRequest();
+  
+  xhr.open("POST", "/v1/api/gymgoers", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onload=function(){
+   
+   if (xhr.status !="200"){
+      document.getElementById("error").innerText=JSON.parse(xhr.responseText).error
+   }else{
+     
+      window.location.href = "http://localhost:8282/view/gym-goers"
+   }
+  
+     
+  }
+  console.log(JSON.stringify(value))
+  xhr.send(JSON.stringify(value));
+  
+  }
+  
+    const form = document.querySelector('form');
+    form.addEventListener('submit', handleSubmit);
+  
+  
+      </script>
 </body>
 </html>

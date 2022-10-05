@@ -38,8 +38,18 @@ func (uh *restHandler) StartRoutes() []routers.Router {
 			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
 		}, {
 			Method:      http.MethodGet,
+			Path:        "/view/gym-goers/:id",
+			Handler:     uh.GymGoersSimpleDetail,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		}, {
+			Method:      http.MethodGet,
 			Path:        "/view/payment",
 			Handler:     uh.GetPayment,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		}, {
+			Method:      http.MethodGet,
+			Path:        "/view/payment/:id",
+			Handler:     uh.EditPayment,
 			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
 		}, {
 			Method:      http.MethodGet,
@@ -48,7 +58,7 @@ func (uh *restHandler) StartRoutes() []routers.Router {
 			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
 		}, {
 			Method:      http.MethodGet,
-			Path:        "/view/gym-goers-detail",
+			Path:        "/view/gym-goers-detail/:id",
 			Handler:     uh.GetGym_goers_detail,
 			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
 		}, {
@@ -57,30 +67,66 @@ func (uh *restHandler) StartRoutes() []routers.Router {
 			Handler:     uh.LogOut,
 			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
 		}, {
-			Method:  http.MethodPut,
-			Path:    "/v1/api/user",
-			Handler: uh.RegisterUser,
+			Method:      http.MethodPut,
+			Path:        "/v1/api/users",
+			Handler:     uh.RegisterUser,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
 		}, {
 			Method:  http.MethodPost,
-			Path:    "/v1/api/user",
+			Path:    "/v1/api/login",
 			Handler: uh.LoginUser,
 		},
 		{
 			Method:  http.MethodGet,
-			Path:    "/v1/api/pyments",
-			Handler: uh.GetAllPyments,
+			Path:    "/v1/api/users",
+			Handler: uh.GetAllUsers,
+		},
+		{
+			Method:      http.MethodGet,
+			Path:        "/v1/api/pyments",
+			Handler:     uh.GetAllPyments,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
 		}, {
-			Method:  http.MethodPost,
-			Path:    "/v1/api/pyments",
-			Handler: uh.CreatePyment,
+			Method:      http.MethodGet,
+			Path:        "/v1/api/pyments/:id",
+			Handler:     uh.GetPymentById,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
 		}, {
-			Method:  http.MethodPut,
-			Path:    "/v1/api/pyments",
-			Handler: uh.UpdatePyment,
+			Method:      http.MethodPost,
+			Path:        "/v1/api/pyments",
+			Handler:     uh.CreatePyment,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
 		}, {
-			Method:  http.MethodDelete,
-			Path:    "/v1/api/pyments",
-			Handler: uh.DeletePyment,
+			Method:      http.MethodPut,
+			Path:        "/v1/api/pyments/:id",
+			Handler:     uh.UpdatePyment,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		}, {
+			Method:      http.MethodGet,
+			Path:        "/v1/api/pyments/delete/:id",
+			Handler:     uh.DeletePyment,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		}, {
+			Method:      http.MethodPost,
+			Path:        "/v1/api/gymgoers",
+			Handler:     uh.RegisterGymGoer,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		}, {
+			Method:      http.MethodGet,
+			Path:        "/v1/api/gymgoers",
+			Handler:     uh.GetAllGymGoers,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		},
+		{
+			Method:      http.MethodGet,
+			Path:        "/v1/api/gymgoers/:id",
+			Handler:     uh.GetGymGoerById,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		}, {
+			Method:      http.MethodGet,
+			Path:        "/v1/api/gymgoers/delete/:id",
+			Handler:     uh.DeleteGymGoer,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
 		},
 	}
 

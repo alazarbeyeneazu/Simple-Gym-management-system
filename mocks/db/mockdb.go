@@ -36,6 +36,21 @@ func (m *MockDBPort) EXPECT() *MockDBPortMockRecorder {
 	return m.recorder
 }
 
+// CreateGymGoers mocks base method.
+func (m *MockDBPort) CreateGymGoers(arg0 context.Context, arg1 models.Gym_goers) (models.Gym_goers, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateGymGoers", arg0, arg1)
+	ret0, _ := ret[0].(models.Gym_goers)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateGymGoers indicates an expected call of CreateGymGoers.
+func (mr *MockDBPortMockRecorder) CreateGymGoers(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateGymGoers", reflect.TypeOf((*MockDBPort)(nil).CreateGymGoers), arg0, arg1)
+}
+
 // CreatePymentType mocks base method.
 func (m *MockDBPort) CreatePymentType(arg0 context.Context, arg1 models.PymentType) (models.PymentType, error) {
 	m.ctrl.T.Helper()
@@ -66,6 +81,20 @@ func (mr *MockDBPortMockRecorder) CreateUser(arg0, arg1 interface{}) *gomock.Cal
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateUser", reflect.TypeOf((*MockDBPort)(nil).CreateUser), arg0, arg1)
 }
 
+// DeleteGymGoers mocks base method.
+func (m *MockDBPort) DeleteGymGoers(arg0 context.Context, arg1 models.Gym_goers) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteGymGoers", arg0, arg1)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteGymGoers indicates an expected call of DeleteGymGoers.
+func (mr *MockDBPortMockRecorder) DeleteGymGoers(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteGymGoers", reflect.TypeOf((*MockDBPort)(nil).DeleteGymGoers), arg0, arg1)
+}
+
 // DeletePyment mocks base method.
 func (m *MockDBPort) DeletePyment(arg0 context.Context, arg1 models.PymentType) error {
 	m.ctrl.T.Helper()
@@ -94,6 +123,21 @@ func (mr *MockDBPortMockRecorder) DeleteUser(arg0, arg1 interface{}) *gomock.Cal
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteUser", reflect.TypeOf((*MockDBPort)(nil).DeleteUser), arg0, arg1)
 }
 
+// GetAllGymGoers mocks base method.
+func (m *MockDBPort) GetAllGymGoers(arg0 context.Context) ([]models.Gym_goers, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetAllGymGoers", arg0)
+	ret0, _ := ret[0].([]models.Gym_goers)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAllGymGoers indicates an expected call of GetAllGymGoers.
+func (mr *MockDBPortMockRecorder) GetAllGymGoers(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllGymGoers", reflect.TypeOf((*MockDBPort)(nil).GetAllGymGoers), arg0)
+}
+
 // GetAllPyments mocks base method.
 func (m *MockDBPort) GetAllPyments(arg0 context.Context) ([]models.PymentType, error) {
 	m.ctrl.T.Helper()
@@ -107,6 +151,96 @@ func (m *MockDBPort) GetAllPyments(arg0 context.Context) ([]models.PymentType, e
 func (mr *MockDBPortMockRecorder) GetAllPyments(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllPyments", reflect.TypeOf((*MockDBPort)(nil).GetAllPyments), arg0)
+}
+
+// GetGYmGorsById mocks base method.
+func (m *MockDBPort) GetGYmGorsById(arg0 context.Context, arg1 models.Gym_goers) (models.Gym_goers, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetGYmGorsById", arg0, arg1)
+	ret0, _ := ret[0].(models.Gym_goers)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetGYmGorsById indicates an expected call of GetGYmGorsById.
+func (mr *MockDBPortMockRecorder) GetGYmGorsById(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetGYmGorsById", reflect.TypeOf((*MockDBPort)(nil).GetGYmGorsById), arg0, arg1)
+}
+
+// GetGymGoerByCreatedByFirstName mocks base method.
+func (m *MockDBPort) GetGymGoerByCreatedByFirstName(arg0 context.Context, arg1 models.User) ([]models.Gym_goers, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetGymGoerByCreatedByFirstName", arg0, arg1)
+	ret0, _ := ret[0].([]models.Gym_goers)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetGymGoerByCreatedByFirstName indicates an expected call of GetGymGoerByCreatedByFirstName.
+func (mr *MockDBPortMockRecorder) GetGymGoerByCreatedByFirstName(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetGymGoerByCreatedByFirstName", reflect.TypeOf((*MockDBPort)(nil).GetGymGoerByCreatedByFirstName), arg0, arg1)
+}
+
+// GetGymGoerByCreatedByLastName mocks base method.
+func (m *MockDBPort) GetGymGoerByCreatedByLastName(arg0 context.Context, arg1 models.User) ([]models.Gym_goers, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetGymGoerByCreatedByLastName", arg0, arg1)
+	ret0, _ := ret[0].([]models.Gym_goers)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetGymGoerByCreatedByLastName indicates an expected call of GetGymGoerByCreatedByLastName.
+func (mr *MockDBPortMockRecorder) GetGymGoerByCreatedByLastName(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetGymGoerByCreatedByLastName", reflect.TypeOf((*MockDBPort)(nil).GetGymGoerByCreatedByLastName), arg0, arg1)
+}
+
+// GetGymGoerByCreatedByPhoneNumber mocks base method.
+func (m *MockDBPort) GetGymGoerByCreatedByPhoneNumber(arg0 context.Context, arg1 models.User) ([]models.Gym_goers, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetGymGoerByCreatedByPhoneNumber", arg0, arg1)
+	ret0, _ := ret[0].([]models.Gym_goers)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetGymGoerByCreatedByPhoneNumber indicates an expected call of GetGymGoerByCreatedByPhoneNumber.
+func (mr *MockDBPortMockRecorder) GetGymGoerByCreatedByPhoneNumber(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetGymGoerByCreatedByPhoneNumber", reflect.TypeOf((*MockDBPort)(nil).GetGymGoerByCreatedByPhoneNumber), arg0, arg1)
+}
+
+// GetGymGoerByPaidBy mocks base method.
+func (m *MockDBPort) GetGymGoerByPaidBy(arg0 context.Context, arg1 models.Gym_goers) ([]models.Gym_goers, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetGymGoerByPaidBy", arg0, arg1)
+	ret0, _ := ret[0].([]models.Gym_goers)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetGymGoerByPaidBy indicates an expected call of GetGymGoerByPaidBy.
+func (mr *MockDBPortMockRecorder) GetGymGoerByPaidBy(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetGymGoerByPaidBy", reflect.TypeOf((*MockDBPort)(nil).GetGymGoerByPaidBy), arg0, arg1)
+}
+
+// GetGymGoerByUserId mocks base method.
+func (m *MockDBPort) GetGymGoerByUserId(arg0 context.Context, arg1 models.Gym_goers) (models.Gym_goers, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetGymGoerByUserId", arg0, arg1)
+	ret0, _ := ret[0].(models.Gym_goers)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetGymGoerByUserId indicates an expected call of GetGymGoerByUserId.
+func (mr *MockDBPortMockRecorder) GetGymGoerByUserId(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetGymGoerByUserId", reflect.TypeOf((*MockDBPort)(nil).GetGymGoerByUserId), arg0, arg1)
 }
 
 // GetPymentById mocks base method.

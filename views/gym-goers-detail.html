@@ -24,23 +24,34 @@
   <div class="formhandler">
       
     <!-- form -->
-    <div class="form">
+    <form action="">
+          <div class="form">
       <div class="row">
-        <input type="text" placeholder="First Name" value="Alazar">
-        <input type="text" placeholder="Last Name" value="Beyene">
+        <input type="text" placeholder="First Name" value="{{.firstname}}">
+        <input type="text" placeholder="Last Name" value="{{.lastname}}">
       </div>
       
       <div class="row">
-        <input type="text" placeholder="Phone Number " value="+251975146165">
-         <select name="type" id="">
-          <option value="Yearly">Yearly</option>
-          <option value="Yearly">Monthly</option>
-          <option value="Yearly">Monthly Cupon</option>
-         </select>
+        <input type="text" placeholder="Phone Number " value="{{.phonenumber}}">
+        <input type="number" placeholder="Add Days">
       </div>
       <div class="row">
-        <button class="register">Update</button>
+        <input type="text"  disabled value="start date {{.startDate}}">
+        <input type="text"  disabled value="end date {{.endDate}}" >
       </div>
+      <div class="row">
+        <input type="text"  disabled value="Created By {{.creatorFirsName}}">
+        <input type="text"  disabled value="Paid By {{.paidby}}" >
+      </div>
+      <div class="row">
+        <input type="text"  disabled value="Creator Phone Number {{.creatorPhoneNumber}}">
+        <input type="text"  disabled value="Created At {{.createdAt}}" >
+      </div>
+      <div class="row">
+        <button class="register" type="submit">Update</button>
+      </div>
+    </form>
+
 <!-- end of form -->
 
       <!-- qr generator -->
