@@ -82,7 +82,7 @@
    <div class="userinfotable">
     {{range .gym_goers}}
     <div class="table">
-      <div class="firstname childs">{{.FirstName}}</div> <div class="lastname childs">{{.LastName}}</div> <div class="Action childs"><div class="detail"><a href="/view/gym-goers/{{.ID}}"><button class="detailbtn">Details</button></a> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
+      <div class="firstname childs">{{.FirstName}}</div> <div class="lastname childs">{{.LastName}}</div> <div class="Action childs"><div class="detail"><a href="/view/gym-goers/{{.ID}}"><button class="detailbtn">Details</button></a> </div><div class="delete"><a href="/v1/api/gymgoers/delete/{{.ID}}"><button class="deletebtn">Delete</button></a></div></div>
      </div>
      {{end}}
                            

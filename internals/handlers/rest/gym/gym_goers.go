@@ -95,24 +95,46 @@ func (gh *restHandler) GetAllGymGoers(ctx *gin.Context) {
 func (gh *restHandler) GetGymGoerById(ctx *gin.Context) {
 	id := ctx.Params.ByName("id")
 	if id == "" {
+		log.Println("empty id ")
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "empty id"})
 		return
 	}
 	uuids, err := uuid.Parse(id)
 	if err != nil {
+		log.Println("invalid id ", id)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "invalid gymgoer id"})
 		return
 	}
 	if uuids == uuid.MustParse("00000000-0000-0000-0000-000000000000") {
+		log.Println("empty id ")
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "empty id"})
 		return
 	}
+
 	gymgoer := models.Gym_goers{ID: uuids}
+	gymgoeruser, err := gh.gymgoers.GetGymGoerByUserId(ctx, gymgoer)
+	if err != nil {
+		log.Println("gym goer not found ")
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "gym_goer not found "})
+		return
+	}
+	user, err := gh.appUser.GetUserById(ctx, models.User{ID: gymgoeruser.UserId})
+	if err != nil {
+		log.Println("user not found with id", gymgoeruser.UserId)
+	} else {
+		err := gh.appUser.DeleteUser(ctx, user)
+		if err != nil {
+			log.Println("can not delete user with id ", err)
+		}
+	}
+
 	result, err := gh.gymgoers.GetGYmGorsById(ctx, gymgoer)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
+	log.Println("user =>", user)
+	log.Println("gym_goer =>", gymgoer)
 	ctx.JSON(http.StatusOK, gin.H{"error": "", "gymgoer": result})
 
 }

@@ -21,6 +21,7 @@ func (a *dbAdapter) CreateGymGoers(ctx context.Context, gym_goers models.Gym_goe
 		validation.Field(&gym_goers.EndDate, validation.Required),
 		validation.Field(&gym_goers.PaidBy, validation.Required),
 	)
+
 	if err != nil {
 		return models.Gym_goers{}, err
 	}

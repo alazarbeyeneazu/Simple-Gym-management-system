@@ -43,6 +43,11 @@ func (uh *restHandler) StartRoutes() []routers.Router {
 			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
 		}, {
 			Method:      http.MethodGet,
+			Path:        "/v1/api/gymgoers/delete/:id",
+			Handler:     uh.DeleteGymGoer,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		}, {
+			Method:      http.MethodGet,
 			Path:        "/view/payment",
 			Handler:     uh.GetPayment,
 			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
@@ -121,11 +126,6 @@ func (uh *restHandler) StartRoutes() []routers.Router {
 			Method:      http.MethodGet,
 			Path:        "/v1/api/gymgoers/:id",
 			Handler:     uh.GetGymGoerById,
-			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
-		}, {
-			Method:      http.MethodGet,
-			Path:        "/v1/api/gymgoers/delete/:id",
-			Handler:     uh.DeleteGymGoer,
 			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
 		},
 	}
