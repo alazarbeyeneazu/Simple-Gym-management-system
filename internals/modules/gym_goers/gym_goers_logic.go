@@ -149,3 +149,32 @@ func (gm *gymGoersService) GetGymGoerByPaidBy(ctx context.Context, gym_goers mod
 	}
 	return result, nil
 }
+
+func (gm *gymGoersService) UpdateGymGoer(ctx context.Context, gymgoer models.Gym_goers) (models.Gym_goers, error) {
+	err := validation.ValidateStruct(
+		&gymgoer,
+		validation.Field(&gymgoer.ID, validation.Required),
+	)
+	if err != nil {
+		return models.Gym_goers{}, errors.New("gym_goer  id can not be empty")
+	}
+	if gymgoer.UserId == uuid.MustParse("00000000-0000-0000-0000-000000000000") {
+		return models.Gym_goers{}, errors.New("user id can not be empty")
+	}
+	if gymgoer.StartDate.AddDate(0, 0, 1).Before(time.Now()) {
+		log.Println("requested Time", gymgoer.StartDate)
+		return models.Gym_goers{}, errors.New("start date should be equal or after today")
+	}
+	if gymgoer.EndDate.Before(gymgoer.StartDate) {
+		return models.Gym_goers{}, errors.New("end date can not be less than start date")
+	}
+	if err != nil {
+		return models.Gym_goers{}, err
+	}
+	gymGoe, err := gm.db.UpdateGymGoer(ctx, gymgoer)
+	if err != err {
+		return models.Gym_goers{}, err
+	}
+	return gymGoe, nil
+
+}

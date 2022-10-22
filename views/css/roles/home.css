@@ -211,11 +211,19 @@ nav li:hover a{
 .userInfo label{
     font-size: 14px;
 }
-.userInfo .userPermissionTable{
+.userPermissionTable{
     display: flex;
+    /* width: 40vw; */
+    flex-wrap: wrap;
     flex-direction: row;
+    /* display: none; */
+    padding: 30px;
    
 }
+.userPermissionTable div {
+    width: 30%;
+}
+
 /* user lists */
 
 .userLists {

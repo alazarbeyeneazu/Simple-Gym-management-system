@@ -71,6 +71,7 @@ func (a *dbAdapter) GetPymentById(ctx context.Context, pyment models.PymentType)
 }
 
 func (a *dbAdapter) UpdatePyment(ctx context.Context, pyment models.PymentType) (models.PymentType, error) {
+
 	err := validation.Validate(&pyment.ID, validation.Required)
 	if err != nil {
 		return models.PymentType{}, err
@@ -81,14 +82,14 @@ func (a *dbAdapter) UpdatePyment(ctx context.Context, pyment models.PymentType) 
 
 	if pyment.NumberOfDays > 0 {
 
-		a.db.Model(&pyment).Where("id = ?", pyment.ID).Update("number_of_days", pyment.NumberOfDays)
+		a.db.Model(models.PymentType{}).Where("id = ?", pyment.ID).Update("number_of_days", pyment.NumberOfDays)
 	}
 	if pyment.Payment != "" {
 
-		a.db.Model(&pyment).Where("id = ?", pyment.ID).Update("payment", pyment.Payment)
+		a.db.Model(models.PymentType{}).Where("id = ?", pyment.ID).Update("payment", pyment.Payment)
 	}
 	if pyment.PymentType != "" {
-		a.db.Model(&pyment).Where("id = ?", pyment.ID).Update("pyment_type", pyment.PymentType)
+		a.db.Model(models.PymentType{}).Where("id = ?", pyment.ID).Update("pyment_type", pyment.PymentType)
 
 	}
 

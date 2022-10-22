@@ -17,6 +17,7 @@ type Gym_goers struct {
 	StartDate            time.Time `json:"start_date"`
 	EndDate              time.Time `json:"end_date"`
 	PaidBy               string    `json:"paid_by"`
+	PaidAmount           string    `json:"paid_amount"`
 }
 
 type Gym_goerRequest struct {

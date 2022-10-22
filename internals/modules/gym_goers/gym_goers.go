@@ -17,6 +17,7 @@ type GymGoersService interface {
 	GetGymGoerByCreatedByLastName(ctx context.Context, creator models.User) ([]models.Gym_goers, error)
 	GetGymGoerByCreatedByPhoneNumber(ctx context.Context, creator models.User) ([]models.Gym_goers, error)
 	GetGymGoerByPaidBy(ctx context.Context, gym_goers models.Gym_goers) ([]models.Gym_goers, error)
+	UpdateGymGoer(ctx context.Context, gym_goer models.Gym_goers) (models.Gym_goers, error)
 }
 type gymGoersService struct {
 	db ports.DBPort

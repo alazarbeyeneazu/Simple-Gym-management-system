@@ -25,16 +25,18 @@
   <div class="formhandler">
       
     <!-- form -->
+    <form action="http://localhost:8282/v1/api/roles" method="get" class="form">
     <div class="form">
       <div class="row">
-        <input type="text" placeholder="Role Name">
+        <input type="text" placeholder="Role Name" name="role_name">
       
       </div>
       
      
       <div class="row">
-        <button class="register">Create</button><button class="reset">Reset</button>
+        <button class="register" type="submit">Create</button><button class="reset">Reset</button>
       </div>
+ 
 <!-- end of form -->
 
       <!-- qr generator -->
@@ -45,38 +47,15 @@
    
     <div class="userInfo">
       <div class="userPermissionTable">
-        <input type="checkbox" name="createuser"> <label for="createuser">Create User</label></input>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="createuser"> <label for="createuser"> Edit User</label></input>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="createuser"> <label for="createuser">Delete User</label></input>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <input type="checkbox" name="createuser"> <label for="createuser">Suspend User</label></input>
-        
-      </div>
-      <div class="userPermissionTable">
-        <input type="checkbox" name="createuser"> <label for="createuser">Create Gym-goers</label></input>
-        <input type="checkbox" name="createuser"> <label for="createuser">Edit Gym-goers</label></input>
-        <input type="checkbox" name="createuser"> <label for="createuser">Delete Gym-goers</label></input>
-        <input type="checkbox" name="createuser"> <label for="createuser">Suspend Gym-goers</label></input>
-        
-      </div>
-      <div class="userPermissionTable">
-        <input type="checkbox" name="createuser"> <label for="createuser">Create Payment</label></input>
-        &nbsp;&nbsp;&nbsp;<input type="checkbox" name="createuser"> <label for="createuser">Edit Payment</label></input>
-        &nbsp;&nbsp;&nbsp;<input type="checkbox" name="createuser"> <label for="createuser">Delete Payment</label></input>
-        &nbsp;&nbsp;&nbsp;<input type="checkbox" name="createuser"> <label for="createuser">Edit Setting</label></input>
-       
-      </div>
-      <div class="userPermissionTable">
-        <input type="checkbox" name="createuser"> <label for="createuser">Create Role</label></input>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="createuser"> <label for="createuser">Edit Role</label></input>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <input type="checkbox" name="createuser"> <label for="createuser">Delete Role</label></input>
-       
-      </div>
-     
-        
-        
+    
+        {{range .permission}}
+        <div class="permission"> <input type="checkbox" class="permission" value="{{.ID}}"  name="permissions"> <label for="createuser">{{.Action}}</label></input></div>    
+        {{end}}
+    
     </div>
   </div>
 </div>
+</form>
    </div>
      
 <div class="userLists">
@@ -84,20 +63,18 @@
     <input type="text" placeholder="Search" class="search">
   </form>
    <div class="userinfotable">
+     {{range .roles}}
     <div class="table">
-      <div class="firstname childs">Administrator</div> <div class="lastname childs">3 Personals</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Role Detail</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
+      <div class="firstname childs">{{.RoleName}}</div> <div class="lastname childs"></div> <div class="Action childs"><div class="detail"><a href="/view/roles/{{.RoleName}}"><button class="detailbtn">Detail</button></a> </div><div class="delete"><a href="/v1/api/roles/{{.RoleName}}"><button class="deletebtn">Delete</button></a></div></div>
      </div>
-     <div class="table">
-      <div class="firstname childs">Manager</div> <div class="lastname childs">4 Personals</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Role Detail</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Display Person</div> <div class="lastname childs">8 Personals</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Role Detail</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
+     {{end}}
     
     
                            
    </div>
 </div>
 <script src="/script/collapser/home.js"></script>
+<script src="/script/jquery/jquery.js"></script>
+
 </body>
 </html>

@@ -3,10 +3,12 @@ package persistant
 import (
 	"context"
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/constants/models"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
+	"github.com/go-ozzo/ozzo-validation/v4/is"
 	"github.com/google/uuid"
 )
 
@@ -151,4 +153,48 @@ func (a *dbAdapter) GetGymGoerByPaidBy(ctx context.Context, gym_goers models.Gym
 		return []models.Gym_goers{}, result.Error
 	}
 	return gymgoer, nil
+}
+
+func (a *dbAdapter) UpdateGymGoer(ctx context.Context, newGymGoer models.Gym_goers) (models.Gym_goers, error) {
+	err := validation.Validate(&newGymGoer.ID, validation.Required, is.UUID)
+	var UpdateGymUser models.Gym_goers
+
+	result := a.db.Where("user_id = ?", newGymGoer.UserId).First(&UpdateGymUser)
+
+	if result.RowsAffected == 0 {
+		return models.Gym_goers{}, fmt.Errorf("can not find the user with is id %v", newGymGoer.ID)
+	}
+	if err != nil {
+		return newGymGoer, fmt.Errorf("user id %s", err.Error())
+	}
+	if len(newGymGoer.CreatedByFirstName) > 0 {
+		err := validation.Validate(&newGymGoer.CreatedByFirstName, validation.Length(2, 100))
+		if err != nil {
+			return newGymGoer, fmt.Errorf("creator first_name %s", err.Error())
+		}
+		a.db.Model(&models.Gym_goers{}).Where("user_id = ? ", newGymGoer.UserId).Exec("UPDATE users set created_by_first_name = ?", newGymGoer.CreatedByFirstName)
+
+	}
+	if len(newGymGoer.CreatedByLastName) > 0 {
+		err := validation.Validate(&newGymGoer.CreatedByFirstName, validation.Length(2, 100))
+		if err != nil {
+			return newGymGoer, fmt.Errorf("creator last_name %s", err.Error())
+		}
+		a.db.Model(&models.Gym_goers{}).Where("user_id = ? ", newGymGoer.UserId).Exec("UPDATE users set created_by_last_name = ?", newGymGoer.CreatedByLastName)
+
+	}
+	if len(newGymGoer.CreatedByPhoneNumber) > 0 {
+		err := validation.Validate(&newGymGoer.CreatedByFirstName, validation.Length(2, 100))
+		if err != nil {
+			return newGymGoer, fmt.Errorf("creator phone_number %s", err.Error())
+		}
+		a.db.Model(&models.Gym_goers{}).Where("user_id = ? ", newGymGoer.UserId).Exec("UPDATE users set created_by_phone_number = ?", newGymGoer.CreatedByPhoneNumber)
+
+	}
+
+	a.db.Model(&models.Gym_goers{}).Where("user_id = ? ", newGymGoer.UserId).Exec("UPDATE gym_goers set start_date = ?", newGymGoer.StartDate)
+	a.db.Model(&models.Gym_goers{}).Where("user_id = ? ", newGymGoer.UserId).Exec("UPDATE gym_goers set end_date = ?", newGymGoer.EndDate)
+	a.db.Model(&models.Gym_goers{}).Where("user_id = ? ", newGymGoer.UserId).Exec("UPDATE gym_goers set paid_by = ?", newGymGoer.PaidBy)
+
+	return newGymGoer, nil
 }

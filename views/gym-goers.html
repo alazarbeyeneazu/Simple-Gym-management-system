@@ -10,7 +10,9 @@
     <title>Home</title>
 </head>
 <body>
+
     <section>
+      <h4 id="error" ></h4>
       <!-- left bar -->
        <a href="" id="collapser">
         <span class="fa fa-bars" id="collapsericon"></span>
@@ -28,21 +30,23 @@
     <form action="" class="form">
     <div class="form">
       <div class="row">
-        <input type="text" name="first_name" placeholder="First Name">
-        <input type="text" name="last_name" placeholder="Last Name">
+        <input type="text" name="first_name" value="{{.gymgoerDetailFirstName}}" placeholder="First Name">
+        <input type="text" name="last_name" value="{{.gymgoerDetailLastName}}" placeholder="Last Name">
       </div>
       
       <div class="row">
-        <input type="text" name="phone_number" placeholder="Phone Number ">
+        <input type="text" name="phone_number" value="{{.gymgoerPhoneNumber}}" placeholder="Phone Number ">
          <select name="payment_type" id="">
+          <option value="00000000-0000-0000-0000-000000000000">-- Select Pyment --</option>
           {{range .payments}}
           <option value="{{.ID}}">{{.PymentType}}</option>
           {{end}}
          </select>
       </div>
       <div class="row">
-        <input name="start_date" type="date" placeholder="Start Date">
+        <input name="start_date" style="display:{{.startdateDisp}}"  type="date" placeholder="Start Date">
         <select name="paid_by" >
+          <option value="">-- Select Paid By --</option>
           <option value="Bank Transfer">Bank Transfer</option>
           <option value="Cash">Cash</option>
          
@@ -50,7 +54,7 @@
       </div>
       
       <div class="row">
-        <button type="submit" class="register">Register</button><button class="reset">Reset</button>
+        <button type="submit" class="register">{{.actionName}}</button><button class="reset">Reset</button>
       </div>
     </form>
 <!-- end of form -->
@@ -62,12 +66,12 @@
    <div class="qrgenerator">
     <div id="qrcode"></div>
     <div class="userInfo">
-        <span class="info">First Name </span> <span>{{.gymgoerDetailFirstName}} </span>
+        <span class="info" style="display:{{.disabled}};">First Name </span> <span>{{.gymgoerDetailFirstName}} </span>
         <br>
-        <span class="info">Last Name </span> <span>{{.gymgoerDetailLastName }} </span>
+        <span class="info" style="display:{{.disabled}};">Last Name </span> <span>{{.gymgoerDetailLastName }} </span>
         <br> 
 
-        <button>CheckIn</button> <a href="/view/gym-goers-detail/{{.qrid}}"><button>Details</button></a>
+       <a href="/view/gym-goers-detail/{{.qrid}}"><button style="width: 20vw;display:{{.disabled}};">Details</button></a>
         
         
     </div>
@@ -76,15 +80,19 @@
    </div>
      
 <div class="userLists">
-  <form action="search">
-    <input type="text" placeholder="Search" class="search">
+  <form action="/view/gymgoers" method="get">
+    <input type="text" name="phone_number" placeholder="0975146165" class="search">
+    <button type="submit" style="background:#00df8a;padding-left: 25px;padding: 5px;padding-bottom: 7px;padding-right: 20px;cursor: pointer; color: white;">search</button>
   </form>
    <div class="userinfotable">
-    {{range .gym_goers}}
+     {{range .gym_goers}}
     <div class="table">
+    
       <div class="firstname childs">{{.FirstName}}</div> <div class="lastname childs">{{.LastName}}</div> <div class="Action childs"><div class="detail"><a href="/view/gym-goers/{{.ID}}"><button class="detailbtn">Details</button></a> </div><div class="delete"><a href="/v1/api/gymgoers/delete/{{.ID}}"><button class="deletebtn">Delete</button></a></div></div>
-     </div>
-     {{end}}
+      
+    </div>
+     {{end}} 
+
                            
    </div>
 </div>
@@ -99,7 +107,7 @@
     colorLight : "#ffffff",
     correctLevel : QRCode.CorrectLevel.H
 });
-   qrcode.makeCode({{.qrid}})
+   qrcode.makeCode({{.qrDisplayId}})
 </script>
 
 <script>
@@ -116,12 +124,15 @@
      //      
   var xhr = new XMLHttpRequest();
   
-  xhr.open("POST", "/v1/api/gymgoers", true);
+  xhr.open("{{.method}}", "{{.url}}", true);
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.onload=function(){
    
    if (xhr.status !="200"){
+ 
       document.getElementById("error").innerText=JSON.parse(xhr.responseText).error
+      document.getElementById("error").style="color:rgb(254, 253, 253);width: 80vw;position: absolute;top: 10px;left: 10vw;background: rgba(255, 0, 0, 0.591);height: 30px;padding: 5px;border-radius: 5px;";
+
    }else{
      
       window.location.href = "http://localhost:8282/view/gym-goers"

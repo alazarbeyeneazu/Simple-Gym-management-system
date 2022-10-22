@@ -1,6 +1,9 @@
 package rest
 
 import (
+	"github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/modules/admin"
+	"github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/modules/authz"
+	"github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/modules/checkin"
 	gymgoers "github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/modules/gym_goers"
 	"github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/modules/pyment"
 	"github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/modules/user"
@@ -37,15 +40,40 @@ type RestHandler interface {
 	RegisterGymGoer(ctx *gin.Context)
 	GetAllGymGoers(ctx *gin.Context)
 	GetGymGoerById(ctx *gin.Context)
+
+	//admin related
+	RegisterAdmin(ctx *gin.Context)
+	DeleteAdmin(ctx *gin.Context)
+	EditAdmin(ctx *gin.Context)
+	UpdateAdmin(ctx *gin.Context)
+
+	//role related
+	CreateRole(ctx *gin.Context)
+	EditRole(ctx *gin.Context)
+	UpdateRole(ctx *gin.Context)
+
+	//setting
+	UpdateSetting(ctx *gin.Context)
+
+	//checking
+	CheckinUser(ctx *gin.Context)
+
+	//checking by phone
+	GymGoersSimpleDetailByPhoneNumber(ctx *gin.Context)
+	Report(ctx *gin.Context)
+	ReportByDate(ctx *gin.Context)
 }
 
 type restHandler struct {
 	appUser    user.UserService
 	pymentUser pyment.PymentService
+	auth       authz.AuthService
+	admin      admin.AdminService
+	checkin    checkin.CheckingService
 	gymgoers   gymgoers.GymGoersService
 	Routers    []routers.Router
 }
 
-func Init(user user.UserService, pyment pyment.PymentService, gymgoer gymgoers.GymGoersService) RestHandler {
-	return &restHandler{appUser: user, pymentUser: pyment, gymgoers: gymgoer}
+func Init(user user.UserService, pyment pyment.PymentService, gymgoer gymgoers.GymGoersService, admin admin.AdminService, auth authz.AuthService, checkin checkin.CheckingService) RestHandler {
+	return &restHandler{appUser: user, pymentUser: pyment, gymgoers: gymgoer, admin: admin, auth: auth, checkin: checkin}
 }

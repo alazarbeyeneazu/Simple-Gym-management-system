@@ -333,6 +333,21 @@ func (mr *MockDBPortMockRecorder) GetUsers(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUsers", reflect.TypeOf((*MockDBPort)(nil).GetUsers), arg0)
 }
 
+// UpdateGymGoer mocks base method.
+func (m *MockDBPort) UpdateGymGoer(arg0 context.Context, arg1 models.Gym_goers) (models.Gym_goers, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateGymGoer", arg0, arg1)
+	ret0, _ := ret[0].(models.Gym_goers)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdateGymGoer indicates an expected call of UpdateGymGoer.
+func (mr *MockDBPortMockRecorder) UpdateGymGoer(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateGymGoer", reflect.TypeOf((*MockDBPort)(nil).UpdateGymGoer), arg0, arg1)
+}
+
 // UpdatePyment mocks base method.
 func (m *MockDBPort) UpdatePyment(arg0 context.Context, arg1 models.PymentType) (models.PymentType, error) {
 	m.ctrl.T.Helper()

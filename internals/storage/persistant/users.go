@@ -25,7 +25,7 @@ func Init() ports.DBPort {
 	if err != nil {
 		log.Fatal(err)
 	}
-	db.AutoMigrate(&models.User{}, &models.PymentType{}, &models.Gym_goers{})
+	db.AutoMigrate(&models.User{}, &models.PymentType{}, &models.Gym_goers{}, &models.AdminUsers{}, &models.Permission{}, &models.Role{}, &models.UserRole{}, &models.Checkins{})
 
 	return &dbAdapter{db: db}
 }
@@ -75,11 +75,12 @@ func (a *dbAdapter) UpdateUser(ctx context.Context, newUser, user models.User) (
 		return user, fmt.Errorf("user id %s", err.Error())
 	}
 	if len(newUser.FirstName) > 0 {
+
 		err := validation.Validate(&user.FirstName, validation.Length(2, 100))
 		if err != nil {
 			return user, fmt.Errorf("first_name %s", err.Error())
 		}
-		a.db.Where("id == ? ", user.ID).Exec("UPDATE users set first_name = ?", newUser.FirstName)
+		a.db.Model(&models.User{}).Where("id = ? ", user.ID).Update("first_name", newUser.FirstName)
 
 	}
 	if len(newUser.LastName) > 0 {
@@ -87,17 +88,25 @@ func (a *dbAdapter) UpdateUser(ctx context.Context, newUser, user models.User) (
 		if err != nil {
 			return user, fmt.Errorf("last_name %s", err.Error())
 		}
-		a.db.Where("id = ? ", user.ID).Exec("UPDATE users set last_name = ?", newUser.LastName)
+		a.db.Model(&models.User{}).Where("id = ? ", user.ID).Update("last_name", newUser.LastName)
 	}
 	if len(newUser.PhoneNumber) > 0 {
+
 		if len(newUser.PhoneNumber) == 10 {
 			newUser.PhoneNumber = "+251" + newUser.PhoneNumber[1:]
 		}
+
 		err := validation.Validate(&user.PhoneNumber, validation.Length(13, 13))
 		if err != nil {
 			return user, fmt.Errorf("phone_number %s", err.Error())
 		}
-		a.db.Where("id = ? ", user.ID).Exec("UPDATE users set phone_number = ?", newUser.PhoneNumber)
+		var checkUser models.User
+		res := a.db.Model(&models.User{}).Where("phone_number = ?", newUser.PhoneNumber).First(&checkUser)
+		if res.RowsAffected != 0 && checkUser.ID != newUser.ID {
+			log.Println(user.ID, " AND ", checkUser.ID)
+			return models.User{}, fmt.Errorf("user found with this %s phone number", newUser.PhoneNumber)
+		}
+		a.db.Model(&models.User{}).Where("id = ? ", user.ID).Update("phone_number", newUser.PhoneNumber)
 
 	}
 	if len(newUser.Password) > 0 {
@@ -106,7 +115,7 @@ func (a *dbAdapter) UpdateUser(ctx context.Context, newUser, user models.User) (
 		if err != nil {
 			return user, fmt.Errorf("phone_number %s", err.Error())
 		}
-		a.db.Where("id = ? ", user.ID).Exec("UPDATE users set password = ?", newUser.Password)
+		a.db.Model(&models.User{}).Where("id = ? ", user.ID).Update("password", newUser.Password)
 
 	}
 	result = a.db.Where("id = ?", user.ID).First(&updatedUser)

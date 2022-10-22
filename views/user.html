@@ -10,6 +10,7 @@
 </head>
 <body>
     <section>
+      <h4 id="error" ></h4>
       <!-- left bar -->
        <a href="" id="collapser">
         <span class="fa fa-bars" id="collapsericon"></span>
@@ -24,23 +25,29 @@
   <div class="formhandler">
       
     <!-- form -->
-    <div class="form">
-      <div class="row">
-        <input type="text" placeholder="First Name">
-        <input type="text" placeholder="Last Name">
-      </div>
+     <form  class="form">
+      <div class="form">
+        <div class="row">
+          <input type="text" value="{{.adminFirstName}}" name="first_name" placeholder="First Name">
+          <input type="text" value="{{.adminLastName}}" name="last_name" placeholder="Last Name">
+        </div>
       
-      <div class="row">
-        <input type="text" placeholder="Phone Number ">
-         <select name="type" id="">
-          <option value="Yearly">Administrator</option>
-          <option value="Yearly">Displayer</option>
-          <option value="Yearly">Manager</option>
-         </select>
-      </div>
-      <div class="row">
-        <button class="register">Register</button><button class="reset">Reset</button>
-      </div>
+        <div class="row">
+          <input type="text" value="{{.adminPhoneNumber}}" name="phone_number" placeholder="Phone Number ">
+           <select  name="role" id="">
+            {{range .roles}}
+            <option value="{{.RoleName}}">{{.RoleName}}</option>
+           {{end}}
+           </select>
+        </div>
+        <div class="row">
+          <input type="password" value="{{.adminPassword}}" name="password" placeholder="Password">
+        
+        </div>
+        <div class="row">
+          <button class="register" type="submit">{{.actionType}}</button><button class="reset">Reset</button>
+        </div>
+     </form>
 <!-- end of form -->
 
       <!-- qr generator -->
@@ -56,133 +63,64 @@
     <input type="text" placeholder="Search" class="search">
   </form>
    <div class="userinfotable">
+    {{range .admins}}
     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-      <div class="table">
-      <div class="firstname childs">Alazar</div> <div class="lastname childs">Beyene</div><div class="lastname childs">+251975146165</div><div class="lastname childs">Administrator</div> <div class="lastname childs">Active</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="detail"><button class="detailbtn">Suspend</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
+       
+      <div class="firstname childs">{{.FirstName}}</div> <div class="lastname childs">{{.LastName}}</div><div class="lastname childs">{{.PhoneNumber}}</div><div class="lastname childs">{{.Role}}</div>  <div class="Action childs"><div class="detail"><a href="http://localhost:8282/view/users/{{.AdminId}}"><button class="detailbtn">Edit</button></a> </div><div class="delete"><a href="http://localhost:8282/v1/api/admins/{{.AdminId}}"><button class="deletebtn">Delete</button></a></div></div>
+    
+    </div>
+    {{end}}
      
                            
    </div>
 </div>
 <script src="/script/collapser/home.js"></script>
+<script>
+
+      
+
+  function handleSubmit(event) {
+      event.preventDefault();
+  
+      const data = new FormData(event.target);
+  
+      const value = Object.fromEntries(data.entries());
+  
+     //      
+  var xhr = new XMLHttpRequest();
+  
+  xhr.open("{{.method}}", "http://localhost:8282/v1/api/admins{{.sendTo}}", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onload=function(){
+   
+   if (xhr.status !="200"){
+    if (JSON.parse(xhr.responseText).error.first_name != undefined){
+      document.getElementById("error").innerText=JSON.parse(xhr.responseText).error.first_name
+    }else  if (JSON.parse(xhr.responseText).error.last_name != undefined){
+      document.getElementById("error").innerText=JSON.parse(xhr.responseText).error.last_name
+    } else if (JSON.parse(xhr.responseText).error.phone_number != undefined){
+      document.getElementById("error").innerText=JSON.parse(xhr.responseText).error.phone_number
+    }else {
+      document.getElementById("error").innerText="user already registered"
+    } 
+      document.getElementById("error").style="color:rgb(254, 253, 253);width: 80vw;position: absolute;top: 10px;left: 10vw;background: rgba(255, 0, 0, 0.591);height: 30px;padding: 5px;border-radius: 5px;";
+
+   }else{
+     
+      window.location.href = "http://localhost:8282/view/users"
+   }
+  
+     
+  }
+  console.log(JSON.stringify(value))
+  xhr.send(JSON.stringify(value));
+  
+  }
+  
+    const form = document.querySelector('form');
+    form.addEventListener('submit', handleSubmit);
+  
+  
+      </script>
 </body>
 </html>

@@ -23,6 +23,11 @@ func (uh *restHandler) StartRoutes() []routers.Router {
 			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
 		}, {
 			Method:      http.MethodGet,
+			Path:        "/view/users/:adminId",
+			Handler:     uh.EditAdmin,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		}, {
+			Method:      http.MethodGet,
 			Path:        "/view/dashboard",
 			Handler:     uh.GetDashBoard,
 			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
@@ -77,14 +82,59 @@ func (uh *restHandler) StartRoutes() []routers.Router {
 			Handler:     uh.RegisterUser,
 			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
 		}, {
+			Method:      http.MethodPut,
+			Path:        "/v1/api/admins/:adminId",
+			Handler:     uh.UpdateAdmin,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		}, {
+			Method:      http.MethodGet,
+			Path:        "/v1/api/roles",
+			Handler:     uh.CreateRole,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		}, {
+			Method:      http.MethodGet,
+			Path:        "/v1/api/roles/:roleId",
+			Handler:     uh.DeleteRole,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		}, {
+			Method:      http.MethodPost,
+			Path:        "/v1/api/settings",
+			Handler:     uh.UpdateSetting,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		},
+		{
+			Method:      http.MethodGet,
+			Path:        "/v1/api/updaterole",
+			Handler:     uh.UpdateRole,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		},
+		{
+			Method:      http.MethodGet,
+			Path:        "/view/roles/:role",
+			Handler:     uh.EditRole,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		},
+		{
 			Method:  http.MethodPost,
 			Path:    "/v1/api/login",
 			Handler: uh.LoginUser,
 		},
 		{
-			Method:  http.MethodGet,
-			Path:    "/v1/api/users",
-			Handler: uh.GetAllUsers,
+			Method:      http.MethodGet,
+			Path:        "/v1/api/users",
+			Handler:     uh.GetAllUsers,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		}, {
+			Method:  http.MethodPost,
+			Path:    "/v1/api/admins",
+			Handler: uh.RegisterAdmin,
+			// MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		},
+		{
+			Method:      http.MethodGet,
+			Path:        "/v1/api/admins/:user_id",
+			Handler:     uh.DeleteAdmin,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
 		},
 		{
 			Method:      http.MethodGet,
@@ -121,11 +171,35 @@ func (uh *restHandler) StartRoutes() []routers.Router {
 			Path:        "/v1/api/gymgoers",
 			Handler:     uh.GetAllGymGoers,
 			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		}, {
+			Method:      http.MethodPut,
+			Path:        "/v1/api/gymgoers/:id",
+			Handler:     uh.UpadateGymoer,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
 		},
 		{
 			Method:      http.MethodGet,
 			Path:        "/v1/api/gymgoers/:id",
 			Handler:     uh.GetGymGoerById,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		}, {
+			Method:  http.MethodPost,
+			Path:    "/v1/api/checkins",
+			Handler: uh.CheckinUser,
+		}, {
+			Method:      http.MethodGet,
+			Path:        "/view/gymgoers",
+			Handler:     uh.GymGoersSimpleDetailByPhoneNumber,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		}, {
+			Method:      http.MethodGet,
+			Path:        "/view/reports",
+			Handler:     uh.Report,
+			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		}, {
+			Method:      http.MethodGet,
+			Path:        "/view/reportbydays",
+			Handler:     uh.ReportByDate,
 			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
 		},
 	}
