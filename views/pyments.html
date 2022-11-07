@@ -9,6 +9,9 @@
     <title>Home</title>
 </head>
 <body>
+
+      <h4 id="error" ></h4>
+  
     <section>
       <!-- left bar -->
        <a href="" id="collapser">
@@ -22,22 +25,22 @@
     </div>
 <div class="formsQr">
   <div class="formhandler">
-      
-    <!-- form -->
-    <div class="form">
+      <form action="">   <!-- form -->
+    <div class="form" >
+     
       <div class="row">
-        <input type="text" placeholder="Type Name">
-        <input type="number" placeholder="Valide for days">
+        <input type="text" name="pyment_type" value="{{.Paymenttype}}" placeholder="Type Name">
+        <input type="number" name="number_of_days" value="{{.Numberofdays}}" placeholder="Valide for days">
       </div>
       
       <div class="row">
-        <input type="text" placeholder="Payment In Birr">
-        <input type="number" placeholder="Discount 0 - 100 %  ">
-       
+        <input type="text" name="pyment" value="{{.Paymentfortype}}" placeholder="Payment In Birr">       
       </div>
       <div class="row">
-        <button class="register">Add</button><button class="reset">Reset</button>
+        <button class="register" type="submit">{{.status}}</button><button class="reset">Reset</button>
       </div>
+    </form>
+ 
 <!-- end of form -->
 
       <!-- qr generator -->
@@ -47,7 +50,7 @@
    <div class="qrgenerator">
 
     <div class="userInfo">
-        <span class="info">Total Payment Types </span> <span> 5 </span>
+        <span class="info">Total Payment Types </span> <span> {{.counter}} </span>
         <br>
        
 
@@ -59,62 +62,60 @@
    </div>
      
 <div class="userLists">
-  <form action="search">
-    <input type="text" placeholder="Search" class="search">
-  </form>
+<br><br>
    <div class="userinfotable">
     <div class="table">
-      <div class="firstname childs">Monthly</div> <div class="lastname childs">1400 Birr</div><div class="lastname childs">10% Discount</div><div class="lastname childs">Valide for 30 days</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-     <div class="table">
-      <div class="firstname childs">Monthly</div> <div class="lastname childs">1400 Birr</div><div class="lastname childs">10% Discount</div><div class="lastname childs">Valide for 30 days</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-       <div class="table">
-      <div class="firstname childs">Monthly</div> <div class="lastname childs">1400 Birr</div><div class="lastname childs">10% Discount</div><div class="lastname childs">Valide for 30 days</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-       <div class="table">
-      <div class="firstname childs">Monthly</div> <div class="lastname childs">1400 Birr</div><div class="lastname childs">10% Discount</div><div class="lastname childs">Valide for 30 days</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-       <div class="table">
-      <div class="firstname childs">Monthly</div> <div class="lastname childs">1400 Birr</div><div class="lastname childs">10% Discount</div><div class="lastname childs">Valide for 30 days</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-       <div class="table">
-      <div class="firstname childs">Monthly</div> <div class="lastname childs">1400 Birr</div><div class="lastname childs">10% Discount</div><div class="lastname childs">Valide for 30 days</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-       <div class="table">
-      <div class="firstname childs">Monthly</div> <div class="lastname childs">1400 Birr</div><div class="lastname childs">10% Discount</div><div class="lastname childs">Valide for 30 days</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-       <div class="table">
-      <div class="firstname childs">Monthly</div> <div class="lastname childs">1400 Birr</div><div class="lastname childs">10% Discount</div><div class="lastname childs">Valide for 30 days</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-       <div class="table">
-      <div class="firstname childs">Monthly</div> <div class="lastname childs">1400 Birr</div><div class="lastname childs">10% Discount</div><div class="lastname childs">Valide for 30 days</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-       <div class="table">
-      <div class="firstname childs">Monthly</div> <div class="lastname childs">1400 Birr</div><div class="lastname childs">10% Discount</div><div class="lastname childs">Valide for 30 days</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-       <div class="table">
-      <div class="firstname childs">Monthly</div> <div class="lastname childs">1400 Birr</div><div class="lastname childs">10% Discount</div><div class="lastname childs">Valide for 30 days</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-       <div class="table">
-      <div class="firstname childs">Monthly</div> <div class="lastname childs">1400 Birr</div><div class="lastname childs">10% Discount</div><div class="lastname childs">Valide for 30 days</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-       <div class="table">
-      <div class="firstname childs">Monthly</div> <div class="lastname childs">1400 Birr</div><div class="lastname childs">10% Discount</div><div class="lastname childs">Valide for 30 days</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-       <div class="table">
-      <div class="firstname childs">Monthly</div> <div class="lastname childs">1400 Birr</div><div class="lastname childs">10% Discount</div><div class="lastname childs">Valide for 30 days</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-       <div class="table">
-      <div class="firstname childs">Monthly</div> <div class="lastname childs">1400 Birr</div><div class="lastname childs">10% Discount</div><div class="lastname childs">Valide for 30 days</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
-       <div class="table">
-      <div class="firstname childs">Monthly</div> <div class="lastname childs">1400 Birr</div><div class="lastname childs">10% Discount</div><div class="lastname childs">Valide for 30 days</div> <div class="Action childs"><div class="detail"><button class="detailbtn">Edit</button> </div><div class="delete"><button class="deletebtn">Delete</button></div></div>
-     </div>
+      <div class="firstname childs" >Payment Type</div> <div class="lastname childs">Payment</div><div class="lastname childs">Available Days</div><div class="lastname childs">First Name</div><div class="lastname childs">  Last Name</div> <div class="Action childs"><div class="detail">Edit</div><div class="delete">Delete</div></div>
      
+    </div>
+    {{range .payments}}
+
+    <div class="table">
+      
+      <div class="firstname childs">{{.PymentType}}</div> <div class="lastname childs">{{.Payment}}</div><div class="lastname childs">{{.NumberOfDays}}</div><div class="lastname childs">{{.CreatedByFirstName}}</div><div class="lastname childs">{{.CreatedByLastName}}</div> <div class="Action childs"><div class="detail"><a href="http://localhost:8282/view/payment/{{.ID}}"><button class="detailbtn">Edit</button></a> </div><div class="delete"><a href="/v1/api/pyments/delete/{{.ID}}"><button class="deletebtn">Delete</button></a></div></div>
+     </div>
+   {{end}}
                            
    </div>
 </div>
+<script>
+
+      
+
+  function handleSubmit(event) {
+      event.preventDefault();
+  
+      const data = new FormData(event.target);
+  
+      const value = Object.fromEntries(data.entries());
+      console.log(value)
+     //      
+  var xhr = new XMLHttpRequest();
+  
+  xhr.open("{{.method}}", "/v1/api/pyments/{{.editting}}", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onload=function(){
+   
+   if (xhr.status !="200"){
+      document.getElementById("error").innerText=JSON.parse(xhr.responseText).error
+      document.getElementById("error").style="color:rgb(254, 253, 253);width: 80vw;position: absolute;top: 10px;left: 10vw;background: rgba(255, 0, 0, 0.591);height: 30px;padding: 5px;border-radius: 5px;";
+
+   }else{
+     
+      window.location.href = "http://localhost:8282/view/payment"
+   }
+  
+     
+  }
+  xhr.send(JSON.stringify(value));
+  
+  }
+  
+    const form = document.querySelector('form');
+    form.addEventListener('submit', handleSubmit);
+  
+  
+      </script>
 <script src="/script/collapser/home.js"></script>
 </body>
 </html>

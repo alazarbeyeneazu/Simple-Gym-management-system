@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/scan/scan.css">
+    <title>Gym QR Scanner</title>
+</head>
+<bod>
+    <video id="video" width="450px"></video>
+    <div style="width: 600px">
+   
+    </div>
+    <form action="" class="form">
+        <h1 id="scanReady"></h1>
+        <input type="hidden" name="user_id" id="user_id" >
+         <button style="display: none;" class="btn btn-1" id="checkin">CheckIn User</button>
+    </form>
+     <h1 style="display: none;" style="display: none;">Succussfully CheckedIn</h1>  
+     <h1 style="display: none;" id="error"></h1>
+    <h1 style="display: none;" id="firstnam">Fist Name : Alazar</h1>
+      <h1 style="display: none;" id="lastname">Last Name :Beyene</h1>
+       <h1 style="display: none;" id="youhave">Have : 1 Month</h1>
+
+    <script src="/script/scanner/scanner.js"></script>
+<script>
+
+
+
+    let scanner = new Instascan.Scanner({
+        video:document.getElementById("video"),
+        mirror: false
+    });
+    Instascan.Camera.getCameras().then(function(cameras){
+        if (cameras.length >0){
+            // scanner.start(cameras[0]);
+            scanner.start(cameras[cameras.length - 1])
+        }else{
+            alert("no camera detected")
+        }
+    }).catch(function(e){
+        console.error(e);
+    });
+ scanner.addListener('scan',function(e){
+    document.getElementById('scanReady').innerText="Ready";
+     document.getElementById("user_id").value=e
+     document.getElementById("checkin").style="color: white;cursor: pointer;background: #00df8a;width: 90vw; height: 30px;margin-top: -5px;margin-top: 10px;margin-left: 5vw;"
+  });
+
+</script>
+
+<script>
+
+      
+
+    function handleSubmit(event) {
+        event.preventDefault();
+    
+        const data = new FormData(event.target);
+    
+        const value = Object.fromEntries(data.entries());
+    
+       //      
+    var xhr = new XMLHttpRequest();
+  
+
+    xhr.open("POST", "http://192.168.1.12:8282/v1/api/checkins", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onload=function(){
+     
+     if (xhr.status !="200"){
+       console.log(JSON.parse(xhr.responseText))
+        document.getElementById("error").innerText=innerText=JSON.parse(xhr.responseText).user.isChackedIn
+        document.getElementById("error").style=" color: white;cursor: pointer;background: #df0000;width: 90vw; height: 30px;margin-top: -5px;margin-top: 10px;margin-left: 5vw;padding-top:5px;"
+        document.getElementById("checkin").style="display:none;"
+        document.getElementById('scanReady').innerText="";
+ 
+      
+     }else{
+        document.getElementById("checkin").style="display:none;";
+        document.getElementById('scanReady').innerText="";
+        document.getElementById("error").style="display:none;";
+        
+    
+        document.getElementById("firstname").innerText=innerText=JSON.parse(xhr.responseText).user.user_first_name
+        document.getElementById("lastname").style=" color: white;cursor: pointer; background: #00df8a;width: 90vw; height: 30px;margin-top: -5px;margin-top: 10px;margin-left: 5vw;padding-top:5px;"
+        
+        document.getElementById("lastname").innerText=innerText=JSON.parse(xhr.responseText).user.user_last_name
+        document.getElementById("lastname").style=" color: white;cursor: pointer; background: #00df8a;width: 90vw; height: 30px;margin-top: -5px;margin-top: 10px;margin-left: 5vw;padding-top:5px;"
+      
+        document.getElementById("left_days").innerText=innerText=JSON.parse(xhr.responseText).user.user_last_name
+        document.getElementById("left_days").style=" color: white;cursor: pointer; background: #00df8a;width: 90vw; height: 30px;margin-top: -5px;margin-top: 10px;margin-left: 5vw;padding-top:5px;"
+        
+        
+     }
+    
+       
+    }
+    console.log(JSON.stringify(value))
+    xhr.send(JSON.stringify(value));
+    
+    }
+    
+      const form = document.querySelector('form');
+      form.addEventListener('submit', handleSubmit);
+    
+    
+        </script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 package rest
 
 import (
+	"log"
 	"net/http"
 	"time"
 
@@ -17,6 +18,7 @@ func (uh *restHandler) LoginUser(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "bad request"})
 		return
 	}
+
 	usr, err := uh.appUser.GetUserByPhoneNumber(ctx, user)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
@@ -36,7 +38,7 @@ func (uh *restHandler) LoginUser(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "internal error can't create token"})
 		return
 	}
-
+	log.Println("logining ")
 	ctx.SetCookie("Athorization", tokenKey, int(time.Duration(time.Hour*5)), "/", "http://localhost:8282", false, false)
 
 }

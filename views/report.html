@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/fonts/css/all.css">
+  <link rel="stylesheet" href="/style/roport/report.css">
+
+    <title>Home</title>
+</head>
+<body>
+
+    <a href="" id="collapser">
+        <span class="fa fa-bars" id="collapsericon"></span>
+       </a>
+         <!-- left bar -->
+         {{ template "leftmenubar.html" .}}
+<div class="userLists">
+  <form action="/view/reportbydays" method="get">
+    <input type="date" name="start_date" placeholder="0975146165" class="search">
+    <button type="submit" style="background:#00df8a;padding-left: 25px;padding: 5px;padding-bottom: 7px;padding-right: 20px;cursor: pointer; color: white;">search</button>
+  </form>
+
+   <div class="userinfotable">
+   
+    <div class="container">
+      <button style="background:#00df8a;padding-left: 25px;padding: 5px;padding-bottom: 7px;padding-right: 20px;cursor: pointer; color: white;float:right;" onclick="tableToExcel()">Download</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>First Name </th>
+                    <th>Last Name </th>
+                    <th>Registered By</th>
+                    <th>Started At</th>
+                    <th>Paid by</th>
+                    <th>Paid Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+              
+              {{range .today}}
+                <tr>
+                    <td>{{.FirstName}}</td>
+                    <td>{{.LastName}}</td>
+                    <td>{{.CreatedBy}}</td>
+                    <td>{{.StartDate}}</td>
+                    <td>{{.PaidBy}}</td> 
+                    <td>{{.Amount}}</td>
+                    
+                    
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
+      </table> 
+
+                           
+   </div>
+</div>
+<script src="/script/collapser/home.js"></script>
+<script src="/script/excel/table2excel.js"></script>
+<script>
+  function tableToExcel(){
+    var table2excel = new Table2Excel();
+  table2excel.export(document.querySelectorAll("table"));
+  }
+</script>
+</body>
+</html>

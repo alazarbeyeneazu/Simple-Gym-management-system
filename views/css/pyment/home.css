@@ -229,16 +229,18 @@ height: 30px;
 }
 .userinfotable .table{
     width: 80vw;
-    height: 30px;
+    min-height: 30px;
     display: flex;
     flex-direction: row;
     background: #318fd2;
     flex-direction: row;
     margin-top: 1px;
+    font-size: 13px;
 }
 .userinfotable .table:nth-child(even){
     background: #03233a24;
 }
+
 .userinfotable .table:hover{
     background: #03233a;
     color: white;

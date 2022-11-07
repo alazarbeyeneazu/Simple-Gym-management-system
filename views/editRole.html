@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/fonts/css/all.css">
+  <link rel="stylesheet" href="/style/roles/home.css">
+  
+    <title>Home</title>
+</head>
+<body>
+    <section>
+      <!-- left bar -->
+       <a href="" id="collapser">
+        <span class="fa fa-bars" id="collapsericon"></span>
+       </a>
+       {{ template "leftmenubar.html" .}}
+         <!-- end of left bar -->
+   <div class="forms">
+    <div class="legend">
+      <h1>Permissions of {{.role.RoleName}}</h1>
+    </div>
+<div class="formsQr">
+  <div class="formhandler">
+      
+    <!-- form -->
+    <form  class="form">
+
+      <div class="row" style="width:30vw ;">
+        
+        <p style="margin: 40px;">These are the permission that is given to the <span style="color: rgba(8, 8, 164, 0.733);">{{.role.RoleName}}</span> user of the system. 
+            the person who is assigned to this role can do these things.</p>
+
+      </div>
+      
+        <div class="row">
+       <a href="/view/roles"> <button class="register" type="button">Back</button></a>
+      </div>
+     
+ 
+<!-- end of form -->
+
+      <!-- qr generator -->
+
+   </div>
+   <div class="qrgenerator">
+   
+    <div class="userInfo">
+      <div class="userPermissionTable">
+    
+        {{range .assignedPermission}}
+        <div class="permission"> <input type="checkbox" class="permission" value="{{.ID}}"  checked name="permissions"> <label for="createuser">{{.Action}}</label></input></div>    
+        {{end}}
+            
+    
+    </div>
+  </div>
+</div>
+</form>
+   </div>
+     
+
+<script src="/script/collapser/home.js"></script>
+<script src="/script/jquery/jquery.js"></script>
+
+</body>
+</html>
