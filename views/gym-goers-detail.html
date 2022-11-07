@@ -63,13 +63,14 @@
      <br>
      <br>
      
-      <span class="info">Will Expired at </span> <span>22-11-2022 </span>
+      <span class="info">Will Expired at </span> <span>{{.endDate}}</span>
       <br> 
       <form action="" class="form" style="display: inline;">
 
         <input type="hidden" name="user_id" value="{{.qrid}}">
+     {{if .expired}}
         <button type="submit">CheckIn</button> 
-      
+      {{end}}
       </form>
       <a href="/view/gym-goers"><button>Back</button></a>        
         
@@ -119,7 +120,7 @@ function handleSubmit(event) {
    //      
 var xhr = new XMLHttpRequest();
 
-xhr.open("POST", "/v1/api/checkins", true);
+xhr.open("GET", "/v1/api/checkins/{{.qrid}}", true);
 xhr.setRequestHeader("Content-Type", "application/json");
 xhr.onload=function(){
  
@@ -131,7 +132,7 @@ xhr.onload=function(){
  }else{
     
   document.getElementById("error").innerText="User checkedIn"
-    document.getElementById("error").style="color:rgb(20, 253, 53);width: 80vw;position: absolute;top: 10px;left: 10vw;background: rgba(255, 0, 0, 0.591);height: 30px;padding: 5px;border-radius: 5px;";
+    document.getElementById("error").style="color:rgb(254, 253, 253);width: 80vw;position: absolute;top: 10px;left: 10vw;background: rgb(25, 135, 84);height: 30px;padding: 5px;border-radius: 5px;";
 
  }
 

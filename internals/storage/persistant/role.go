@@ -67,6 +67,7 @@ func (p *dbAdapter) AssignRole(ctx context.Context, role models.UserRole) (model
 	}
 	return role, nil
 }
+
 func (p *dbAdapter) GetAssignRoleByUserId(ctx context.Context, role models.UserRole) (models.UserRole, error) {
 	var roles models.UserRole
 	result := p.db.Where("user_id = ?", role.UserId).Find(&roles)

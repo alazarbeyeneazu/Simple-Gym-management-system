@@ -59,10 +59,12 @@
    </div>
      
 <div class="userLists">
+  {{if .list}}
   <form action="search">
     <input type="text" placeholder="Search" class="search">
   </form>
    <div class="userinfotable">
+   
     {{range .admins}}
     <div class="table">
        
@@ -70,9 +72,10 @@
     
     </div>
     {{end}}
-     
+    
                            
    </div>
+   {{end}}
 </div>
 <script src="/script/collapser/home.js"></script>
 <script>

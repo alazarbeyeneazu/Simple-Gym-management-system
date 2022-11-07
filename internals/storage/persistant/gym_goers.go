@@ -172,7 +172,7 @@ func (a *dbAdapter) UpdateGymGoer(ctx context.Context, newGymGoer models.Gym_goe
 		if err != nil {
 			return newGymGoer, fmt.Errorf("creator first_name %s", err.Error())
 		}
-		a.db.Model(&models.Gym_goers{}).Where("user_id = ? ", newGymGoer.UserId).Exec("UPDATE users set created_by_first_name = ?", newGymGoer.CreatedByFirstName)
+		a.db.Model(&models.Gym_goers{}).Where("user_id = ? ", newGymGoer.UserId).Update("created_by_first_name", newGymGoer.CreatedByFirstName)
 
 	}
 	if len(newGymGoer.CreatedByLastName) > 0 {
@@ -180,7 +180,7 @@ func (a *dbAdapter) UpdateGymGoer(ctx context.Context, newGymGoer models.Gym_goe
 		if err != nil {
 			return newGymGoer, fmt.Errorf("creator last_name %s", err.Error())
 		}
-		a.db.Model(&models.Gym_goers{}).Where("user_id = ? ", newGymGoer.UserId).Exec("UPDATE users set created_by_last_name = ?", newGymGoer.CreatedByLastName)
+		a.db.Model(&models.Gym_goers{}).Where("user_id = ? ", newGymGoer.UserId).Update("created_by_last_name", newGymGoer.CreatedByLastName)
 
 	}
 	if len(newGymGoer.CreatedByPhoneNumber) > 0 {
@@ -188,13 +188,13 @@ func (a *dbAdapter) UpdateGymGoer(ctx context.Context, newGymGoer models.Gym_goe
 		if err != nil {
 			return newGymGoer, fmt.Errorf("creator phone_number %s", err.Error())
 		}
-		a.db.Model(&models.Gym_goers{}).Where("user_id = ? ", newGymGoer.UserId).Exec("UPDATE users set created_by_phone_number = ?", newGymGoer.CreatedByPhoneNumber)
+		a.db.Model(&models.Gym_goers{}).Where("user_id = ? ", newGymGoer.UserId).Update("created_by_phone_number", newGymGoer.CreatedByPhoneNumber)
 
 	}
 
-	a.db.Model(&models.Gym_goers{}).Where("user_id = ? ", newGymGoer.UserId).Exec("UPDATE gym_goers set start_date = ?", newGymGoer.StartDate)
-	a.db.Model(&models.Gym_goers{}).Where("user_id = ? ", newGymGoer.UserId).Exec("UPDATE gym_goers set end_date = ?", newGymGoer.EndDate)
-	a.db.Model(&models.Gym_goers{}).Where("user_id = ? ", newGymGoer.UserId).Exec("UPDATE gym_goers set paid_by = ?", newGymGoer.PaidBy)
+	a.db.Model(&models.Gym_goers{}).Where("user_id = ? ", newGymGoer.UserId).Update("start_date", newGymGoer.StartDate)
+	a.db.Model(&models.Gym_goers{}).Where("user_id = ? ", newGymGoer.UserId).Update("end_date", newGymGoer.EndDate)
+	a.db.Model(&models.Gym_goers{}).Where("user_id = ? ", newGymGoer.UserId).Update("paid_by", newGymGoer.PaidBy)
 
 	return newGymGoer, nil
 }

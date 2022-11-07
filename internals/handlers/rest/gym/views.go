@@ -67,7 +67,7 @@ func (uh *restHandler) GetRegistrationPage(ctx *gin.Context) {
 			clearRole = append(clearRole, role)
 		}
 	}
-	ctx.HTML(http.StatusOK, "user.html", gin.H{"FirstName": usr.FirstName, "LastName": usr.LastName, "PhoneNumber": usr.PhoneNumber, "admins": adminUserProfile, "method": "POST", "sendTo": "", "actionType": "Register", "adminFirstName": "", "adminLastName": "", "adminPhoneNumber": "", "adminPassword": "", "roles": clearRole})
+	ctx.HTML(http.StatusOK, "user.html", gin.H{"FirstName": usr.FirstName, "LastName": usr.LastName, "PhoneNumber": usr.PhoneNumber, "admins": adminUserProfile, "method": "POST", "sendTo": "", "actionType": "Register", "adminFirstName": "", "adminLastName": "", "adminPhoneNumber": "", "adminPassword": "", "roles": clearRole, "list": true})
 
 }
 func (uh *restHandler) EditAdmin(ctx *gin.Context) {
@@ -132,7 +132,7 @@ func (uh *restHandler) EditAdmin(ctx *gin.Context) {
 			clearRole = append(clearRole, role)
 		}
 	}
-	ctx.HTML(http.StatusOK, "user.html", gin.H{"FirstName": usr.FirstName, "LastName": usr.LastName, "PhoneNumber": usr.PhoneNumber, "admins": adminUserProfile, "method": "PUT", "sendTo": fmt.Sprintf("/%v", id), "actionType": "Update", "adminFirstName": usrResponse.FirstName, "adminLastName": usrResponse.LastName, "adminPhoneNumber": usrResponse.PhoneNumber, "adminPassword": "", "roles": clearRole})
+	ctx.HTML(http.StatusOK, "user.html", gin.H{"FirstName": usr.FirstName, "LastName": usr.LastName, "PhoneNumber": usr.PhoneNumber, "admins": adminUserProfile, "method": "PUT", "sendTo": fmt.Sprintf("/%v", id), "actionType": "Update", "adminFirstName": usrResponse.FirstName, "adminLastName": usrResponse.LastName, "adminPhoneNumber": usrResponse.PhoneNumber, "adminPassword": "", "roles": clearRole, "list": false})
 
 }
 func (uh *restHandler) GetLoginPage(ctx *gin.Context) {
@@ -162,7 +162,11 @@ func (uh *restHandler) GetDashBoard(ctx *gin.Context) {
 	for _, usr := range users {
 		for _, gym := range gmgoers {
 			if usr.ID == gym.UserId {
-				usersToday = append(usersToday, usr)
+				createdAt := gym.CreatedAt
+				if createdAt.Year() == time.Now().Year() && createdAt.Month() == time.Now().Month() && createdAt.Day() == time.Now().Day() {
+					usersToday = append(usersToday, usr)
+				}
+
 			}
 		}
 	}
@@ -433,6 +437,8 @@ func (uh *restHandler) GetSetting(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "setting.html", usr)
 
 }
+
+// gymgoers detail
 func (uh *restHandler) GetGym_goers_detail(ctx *gin.Context) {
 	id := ctx.Params.ByName("id")
 	if id == "" {
@@ -473,71 +479,67 @@ func (uh *restHandler) GetGym_goers_detail(ctx *gin.Context) {
 
 	startdate := fmt.Sprintf("%d/%d/%d", gymgoer.StartDate.Year(), gymgoer.StartDate.Month(), gymgoer.StartDate.Day())
 	enddate := fmt.Sprintf("%d/%d/%d", gymgoer.EndDate.Year(), gymgoer.EndDate.Month(), gymgoer.EndDate.Day())
-
-	ctx.HTML(http.StatusOK, "gym-goers-detail.html", gin.H{"error": "", "firstname": user.FirstName, "lastname": user.LastName, "createdAt": gymgoer.CreatedAt, "phonenumber": user.PhoneNumber, "startDate": startdate, "endDate": enddate, "creatorFirsName": gymgoer.CreatedByFirstName, "creatorLastName": gymgoer.CreatedByLastName, "creatorPhoneNumber": gymgoer.CreatedByPhoneNumber, "paidby": gymgoer.PaidBy, "qrid": user.ID, "checkins": checkedInAt})
+	expired := time.Now().Before(gymgoer.EndDate)
+	ctx.HTML(http.StatusOK, "gym-goers-detail.html", gin.H{"error": "", "firstname": user.FirstName, "lastname": user.LastName, "createdAt": gymgoer.CreatedAt, "phonenumber": user.PhoneNumber, "startDate": startdate, "endDate": enddate, "creatorFirsName": gymgoer.CreatedByFirstName, "creatorLastName": gymgoer.CreatedByLastName, "creatorPhoneNumber": gymgoer.CreatedByPhoneNumber, "paidby": gymgoer.PaidBy, "qrid": user.ID, "checkins": checkedInAt, "expired": expired})
 
 }
 
 func (uh *restHandler) Report(ctx *gin.Context) {
-	users, err := uh.appUser.GetAllUsers(ctx)
-	if err != nil {
-		ctx.HTML(http.StatusOK, "report.html", gin.H{"hello": "world"})
-	}
-	gmgoers, _ := uh.gymgoers.GetAllGymGoers(ctx)
-
-	usersToday := []models.ReportResponse{}
-	for _, usr := range users {
-		for _, gym := range gmgoers {
-			if usr.ID == gym.UserId {
-				usersToday = append(usersToday, models.ReportResponse{
-					FirstName: usr.FirstName,
-					LastName:  usr.LastName,
-					StartDate: gym.StartDate.Format(time.ANSIC),
-					EndDate:   gym.EndDate,
-					CreatedBy: gym.CreatedByFirstName + " " + gym.CreatedByLastName,
-					PaidBy:    gym.PaidBy,
-					Amount:    gym.PaidAmount,
-				})
-			}
+	reports := []models.HttpReportResponse{}
+	gmgoers, _ := uh.reports.GetAllReports(ctx)
+	for _, rep := range gmgoers {
+		rp := models.HttpReportResponse{
+			FirstName:  rep.FirstName,
+			LastName:   rep.LastName,
+			StartDate:  rep.StartDate.Format(time.ANSIC),
+			EndDate:    fmt.Sprintf("%s/%s/%s/%s", rep.EndDate.Year(), rep.EndDate.Month(), rep.EndDate.Day(), rep.EndDate.Hour()),
+			CreatedBy:  rep.CreatedBy,
+			PymentType: rep.PymentType,
+			Amount:     rep.Amount,
+			PaidBy:     rep.PaidBy,
+			CreatedAt:  rep.CreatedAt.Format(time.Kitchen),
 		}
+		reports = append(reports, rp)
 	}
-	ctx.HTML(http.StatusOK, "report.html", gin.H{"today": usersToday})
+
+	ctx.HTML(http.StatusOK, "report.html", gin.H{"today": reports})
 
 }
 
 func (uh *restHandler) ReportByDate(ctx *gin.Context) {
 	sdate := ctx.Request.URL.Query()["start_date"][0]
-	users, err := uh.appUser.GetAllUsers(ctx)
-	if err != nil {
-		ctx.HTML(http.StatusOK, "report.html", gin.H{"hello": "world"})
-	}
 	pdate, err := time.Parse("2006-01-02", sdate)
 	if err != nil {
 		ctx.HTML(http.StatusOK, "report.html", gin.H{"hello": "world"})
 	}
 
-	gmgoers, _ := uh.gymgoers.GetAllGymGoers(ctx)
+	gmgoers, _ := uh.reports.GetAllReports(ctx)
 
-	usersToday := []models.ReportResponse{}
-	for _, usr := range users {
-		for _, gym := range gmgoers {
+	usersToday := []models.HttpReportResponse{}
 
-			if usr.ID == gym.UserId {
+	for _, gym := range gmgoers {
 
-				if gym.CreatedAt.After(pdate) {
-					usersToday = append(usersToday, models.ReportResponse{
-						FirstName: usr.FirstName,
-						LastName:  usr.LastName,
-						StartDate: gym.StartDate.Format(time.ANSIC),
-						EndDate:   gym.EndDate,
-						CreatedBy: gym.CreatedByFirstName + " " + gym.CreatedByLastName,
-						PaidBy:    gym.PaidBy,
-						Amount:    gym.PaidAmount,
-					})
-				}
+		if gym.CreatedAt.After(pdate) {
+			rp := models.HttpReportResponse{
+				FirstName:  gym.FirstName,
+				LastName:   gym.LastName,
+				StartDate:  gym.StartDate.Format(time.ANSIC),
+				EndDate:    gym.EndDate.Format(time.ANSIC),
+				CreatedBy:  gym.CreatedBy,
+				PymentType: gym.PymentType,
+				Amount:     gym.Amount,
+				PaidBy:     gym.PaidBy,
+				CreatedAt:  gym.CreatedAt.Format(time.Kitchen),
 			}
+			usersToday = append(usersToday, rp)
 		}
+
 	}
 	ctx.HTML(http.StatusOK, "report.html", gin.H{"today": usersToday})
+
+}
+
+func (uh *restHandler) Scanner(ctx *gin.Context) {
+	ctx.HTML(http.StatusOK, "scanner.html", gin.H{"today": ""})
 
 }

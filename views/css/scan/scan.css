@@ -1,0 +1,39 @@
+*{
+    padding: 0;
+    margin: 0;
+    outline: 0;
+    border: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    transition-duration: 0.3s;
+}
+
+h1{
+    font-size: 16px;
+}
+
+
+h2{
+    color: white;
+ 
+    cursor: pointer;
+    background: #00df8a;
+    width: 90vw;
+    height: 30px;
+   margin-top: -5px;
+   margin-top: 10px;
+   padding-top: 5px;
+   margin-left: 5vw;
+   padding-left: 14px;
+
+}
+
+#scanReady{
+    background: #ffffff;
+    color: #00df8a;
+}
+#error{
+    background: #df0000;
+    color: #ffffff;
+}

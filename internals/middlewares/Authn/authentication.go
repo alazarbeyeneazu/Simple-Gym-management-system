@@ -108,7 +108,7 @@ func AuthenticatRequest() gin.HandlerFunc {
 					ctx.Abort()
 					return
 				}
-			} else if paths[len(paths)-1] == "reportbydays" || paths[len(paths)-1] == "reports" && method == http.MethodGet {
+			} else if paths[len(paths)-1] == "reportbydays" || paths[len(paths)-1] == "reports" {
 				if !Authorized("view report", pload.UserId) {
 					ctx.Redirect(http.StatusTemporaryRedirect, "/view/dashboard")
 					ctx.Abort()

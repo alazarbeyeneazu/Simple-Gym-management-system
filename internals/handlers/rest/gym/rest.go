@@ -6,6 +6,7 @@ import (
 	"github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/modules/checkin"
 	gymgoers "github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/modules/gym_goers"
 	"github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/modules/pyment"
+	repor "github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/modules/report"
 	"github.com/alazarbeyeneazu/Simple-Gym-management-system/internals/modules/user"
 	routers "github.com/alazarbeyeneazu/Simple-Gym-management-system/platforms/routes"
 	"github.com/gin-gonic/gin"
@@ -62,6 +63,9 @@ type RestHandler interface {
 	GymGoersSimpleDetailByPhoneNumber(ctx *gin.Context)
 	Report(ctx *gin.Context)
 	ReportByDate(ctx *gin.Context)
+
+	//scanner
+	Scanner(ctx *gin.Context)
 }
 
 type restHandler struct {
@@ -71,9 +75,10 @@ type restHandler struct {
 	admin      admin.AdminService
 	checkin    checkin.CheckingService
 	gymgoers   gymgoers.GymGoersService
+	reports    repor.ReportService
 	Routers    []routers.Router
 }
 
-func Init(user user.UserService, pyment pyment.PymentService, gymgoer gymgoers.GymGoersService, admin admin.AdminService, auth authz.AuthService, checkin checkin.CheckingService) RestHandler {
-	return &restHandler{appUser: user, pymentUser: pyment, gymgoers: gymgoer, admin: admin, auth: auth, checkin: checkin}
+func Init(user user.UserService, pyment pyment.PymentService, gymgoer gymgoers.GymGoersService, admin admin.AdminService, auth authz.AuthService, checkin checkin.CheckingService, report repor.ReportService) RestHandler {
+	return &restHandler{appUser: user, pymentUser: pyment, gymgoers: gymgoer, admin: admin, auth: auth, checkin: checkin, reports: report}
 }

@@ -42,11 +42,13 @@ func (gh *restHandler) RegisterGymGoer(ctx *gin.Context) {
 	ur, _ := gh.appUser.GetUserByPhoneNumber(ctx, models.User{PhoneNumber: gymgoer.PhoneNumber})
 	if ur.PhoneNumber != "" {
 		registergymgoer, err := gh.gymgoers.GetGymGoerByUserId(ctx, models.Gym_goers{UserId: ur.ID})
-		if err.Error() == "record not found" {
-			log.Println("adding user ...")
-		} else if err != nil {
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprintf("can read user with this %s phone number", ur.PhoneNumber), "user": models.Gym_goers{}})
-			return
+		if err != nil {
+			if err.Error() == "record not found" {
+				log.Println("adding user ...")
+			} else {
+				ctx.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprintf("can read user with this %s phone number", ur.PhoneNumber), "user": models.Gym_goers{}})
+				return
+			}
 		}
 		if registergymgoer.CreatedByFirstName != "" {
 			ctx.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprintf("user exist with this %s phone number", ur.PhoneNumber), "user": models.Gym_goers{}})
@@ -116,6 +118,17 @@ func (gh *restHandler) RegisterGymGoer(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error(), "user": models.Gym_goers{}})
 		return
 	}
+	gh.reports.CreateReport(ctx, models.ReportResponse{
+		FirstName:  user.FirstName,
+		LastName:   user.LastName,
+		CreatedBy:  newGymGoer.CreatedByFirstName + " " + newGymGoer.CreatedByLastName,
+		StartDate:  newGymGoer.StartDate,
+		Amount:     pyment.Payment,
+		PymentType: pyment.PymentType,
+		EndDate:    newGymGoer.EndDate,
+		PaidBy:     newGymGoer.PaidBy,
+		CreatedAt:  time.Now(),
+	})
 	ctx.JSON(http.StatusOK, gin.H{"error": "", "user": gymgoerResult})
 
 }
@@ -146,7 +159,7 @@ func (gh *restHandler) UpadateGymoer(ctx *gin.Context) {
 		log.Println("user id not found")
 		return
 	}
-	_, err = gh.appUser.GetUserById(ctx, models.User{ID: users.(uuid.UUID)})
+	userR, err := gh.appUser.GetUserById(ctx, models.User{ID: users.(uuid.UUID)})
 	if err != nil {
 		log.Println(err)
 		return
@@ -178,6 +191,13 @@ func (gh *restHandler) UpadateGymoer(ctx *gin.Context) {
 	}
 
 	if gymgoer.PaymentType == uuid.MustParse("00000000-0000-0000-0000-000000000000") {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Check Payment Type", "user": models.Gym_goers{}})
+		return
+
+	}
+	if gymgoer.PaidBy == "" {
+
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Check Payment Method", "user": models.User{}})
 		return
 	}
 	pyment, err := gh.pymentUser.GetPymentById(ctx, models.PymentType{ID: gymgoer.PaymentType})
@@ -186,21 +206,32 @@ func (gh *restHandler) UpadateGymoer(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error(), "user": models.User{}})
 		return
 	}
+	if gymgoer.Start_date == "" {
 
-	gymUserFromDb, err := gh.gymgoers.GetGymGoerByUserId(ctx, models.Gym_goers{UserId: gymUser.ID})
-	newGymGoer := models.Gym_goers{}
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Check Start Date", "user": models.Gym_goers{}})
+		return
+	}
+	startDate, err := time.Parse("2006-01-02", gymgoer.Start_date)
+	log.Print("start date will be => ", startDate)
 	if err != nil {
-
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error(), "user": models.User{}})
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err, "user": models.Gym_goers{}})
 		return
 	}
 
-	endDate := gymUserFromDb.EndDate.Add(time.Hour * 24 * time.Duration(pyment.NumberOfDays))
+	if time.Now().After(startDate) {
+
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid Starting Date", "user": models.Gym_goers{}})
+		return
+	}
+
+	newGymGoer := models.Gym_goers{}
+
+	endDate := startDate.Add(time.Hour * 24 * time.Duration(pyment.NumberOfDays))
 
 	newGymGoer.EndDate = endDate
 	newGymGoer.UserId = uuids
 	newGymGoer.PaidBy = gymgoer.PaidBy
-	newGymGoer.StartDate = gymUserFromDb.EndDate
+	newGymGoer.StartDate = startDate
 
 	gymgoerResult, err := gh.gymgoers.UpdateGymGoer(ctx, newGymGoer)
 	if err != nil {
@@ -208,6 +239,17 @@ func (gh *restHandler) UpadateGymoer(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err, "user": models.Gym_goers{}})
 		return
 	}
+	gh.reports.CreateReport(ctx, models.ReportResponse{
+		FirstName:  ur.FirstName,
+		LastName:   ur.LastName,
+		CreatedBy:  userR.FirstName + " " + userR.LastName,
+		StartDate:  newGymGoer.StartDate,
+		Amount:     pyment.Payment,
+		PymentType: pyment.PymentType,
+		EndDate:    newGymGoer.EndDate,
+		PaidBy:     newGymGoer.PaidBy,
+		CreatedAt:  time.Now(),
+	})
 	ctx.JSON(http.StatusOK, gin.H{"error": "", "user": gymgoerResult})
 
 }
@@ -311,23 +353,5 @@ func (uh *restHandler) DeleteGymGoer(ctx *gin.Context) {
 	}
 
 	ctx.Redirect(http.StatusTemporaryRedirect, "/view/gym-goers")
-
-}
-
-func (uh *restHandler) AddDay(ctx *gin.Context) {
-	id := ctx.Params.ByName("id")
-	if id == "" {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "empty id"})
-		return
-	}
-	uuids, err := uuid.Parse(id)
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "invalid pyment id"})
-		return
-	}
-	if uuids == uuid.MustParse("00000000-0000-0000-0000-000000000000") {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "empty id"})
-		return
-	}
 
 }

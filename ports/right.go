@@ -50,4 +50,6 @@ type DBPort interface {
 	CheckInUser(ctx context.Context, user models.Checkins) (models.Checkins, error)
 	GetCheckedInByUserId(ctx context.Context, user models.Checkins) ([]models.Checkins, error)
 	GetAllCheckIns(ctx context.Context) ([]models.Checkins, error)
+	CreateReport(ctx context.Context, report models.ReportResponse) error
+	GetAllReports(ctx context.Context) ([]models.ReportResponse, error)
 }

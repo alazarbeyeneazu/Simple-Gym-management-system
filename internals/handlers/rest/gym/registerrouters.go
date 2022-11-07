@@ -183,8 +183,8 @@ func (uh *restHandler) StartRoutes() []routers.Router {
 			Handler:     uh.GetGymGoerById,
 			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
 		}, {
-			Method:  http.MethodPost,
-			Path:    "/v1/api/checkins",
+			Method:  http.MethodGet,
+			Path:    "/v1/api/checkins/:userid",
 			Handler: uh.CheckinUser,
 		}, {
 			Method:      http.MethodGet,
@@ -201,6 +201,11 @@ func (uh *restHandler) StartRoutes() []routers.Router {
 			Path:        "/view/reportbydays",
 			Handler:     uh.ReportByDate,
 			MiddleWares: []gin.HandlerFunc{authn.AuthenticatRequest()},
+		},
+		{
+			Method:  http.MethodGet,
+			Path:    "/view/scan",
+			Handler: uh.Scanner,
 		},
 	}
 
